@@ -2,23 +2,27 @@ import {test, expect} from '@playwright/test';
 import { createSBPRequestLink } from './helpers/create_request_link';
 
 let globalPage;
-
+let baseUrl;
 
 test.beforeAll(async ({browser}) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
+    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', '500', '643');
+    if( baseUrl !== undefined) {
+        await globalPage.goto(baseUrl);
+    }
 });
 
 test.afterAll(async () => {
     await globalPage.close();
 });
-test('Create link and go to payment page', async () => {
-    const baseUrl = await createSBPRequestLink(globalPage, '19', 'send', '500', '643');
-    await globalPage.goto(baseUrl);
-});
 
-test('Check sum', async () => {
+// test('Create link and go to payment page', async ({page}) => {
+//
+// });
 
+test('Popup closing', async () => {
+    await globalPage.click('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[3]/div[2]/div[2]');
 });
 
 

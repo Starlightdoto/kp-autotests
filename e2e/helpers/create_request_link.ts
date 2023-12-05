@@ -38,7 +38,6 @@ export const createSBPRequestLink = async ({page}, merchant, version, sum, curre
     await page.click(submitButtonLocator);
     await page.goto(`https://api.kiberpay.com/api/test/inrequest?login=${login}&pas=${password}&id_merch=${merchant}&pspname=${version}&amount=${sum}&currency=${currency}&rate=0&fee=0&amount_edit=true&sbp=true&qr_bank=4&callback_url=&success_url=&fail_url=&return_url=${returnUrl}&merchant_uid=&customer_uid=&customer_acc=&mail=&test=%7B%7D&q=Send`);
     const requestUrl = await page.locator('body > p:nth-child(2) > a').textContent();
-    console.log(requestUrl);
     return requestUrl;
 }
 
