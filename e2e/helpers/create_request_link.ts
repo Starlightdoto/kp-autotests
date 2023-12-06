@@ -31,8 +31,8 @@ export const createSBPRequestLink = async ({page}, merchant, version, sum, curre
     await page.selectOption(currencySelectorLocator, {
              value: currency});
 
-    const sbpCheckbox = page.locator(sbpCheckboxLocator);
-    const p2pCheckbox = page.locator(p2pCheckboxLocator);
+    const sbpCheckbox = await page.locator(sbpCheckboxLocator);
+    const p2pCheckbox = await page.locator(p2pCheckboxLocator);
     await p2pCheckbox.click();
     await sbpCheckbox.check();
     await page.click(submitButtonLocator);
