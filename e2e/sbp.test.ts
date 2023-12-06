@@ -4,7 +4,9 @@ import { createSBPRequestLink } from './helpers/create_request_link';
 let globalPage;
 let baseUrl;
 
-test.beforeAll(async ({browser}) => {
+test.beforeAll(async ({browser}, testInfo) => {
+    
+
     const context = await browser.newContext();
     globalPage = await context.newPage();
     const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', '500', '643');
@@ -12,6 +14,8 @@ test.beforeAll(async ({browser}) => {
         await globalPage.goto(baseUrl);
     }
 });
+
+
 
 test.afterAll(async () => {
     await globalPage.close();
@@ -22,7 +26,10 @@ test.afterAll(async () => {
 // });
 
 test('Popup closing', async () => {
-    await globalPage.click('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[3]/div[2]/div[2]');
+    const popupButton = globalPage.locator ('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[3]/div[2]/div[2]');
+    await expect(popupButton).toBeVisible();
+    await globalPage.click(popupButton);
+    // await expect(popupButton).toBeHidden();
 });
 
 
