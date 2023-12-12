@@ -37,7 +37,6 @@ test('Popup closing', async () => {
 
 test('Check amount', async () => {
     const amount = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/div/p').textContent();
-    console.log(amount);
     await expect(`${amount}`).toEqual('500.00 ₽');
 });
 
@@ -56,7 +55,7 @@ test('Transfer completed button is active', async () => {
 
 
 
-test('Back  button is active', async () => {
+test('Back button is active', async () => {
     const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
     await expect(backButton).toBeEnabled();
 });
@@ -102,7 +101,7 @@ test('Cancel Modal Window checks', async () => {
 
 
 
-test('Locale change', async () => {
+test('Locale change - main page', async () => {
     const changeLocaleButton = await globalPage.locator('//*[@id="pv_id_2"]');
     const enButton = await globalPage.locator('//*[@id="pv_id_2_1"]/div/div');
     const uzButton = await globalPage.locator('//*[@id="pv_id_2_2"]/div/div');
@@ -147,7 +146,6 @@ test('Go to transfer completed page', async () => {
     await completeButton.click();
     const headerText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[2]/p');
     await expect(headerText).toBeVisible();
-
 });
 
 test('Transfer completed page', async () => {
@@ -160,7 +158,7 @@ test('Transfer completed page', async () => {
     const transferHasNotCompletedButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[2]');
     await transferDetailsBlock.click();
     await globalPage.waitForTimeout(2000);
-    const orderNumberInDetails = await globalPage.locator('//*[@id="pv_id_8_0_content"]/div/div/div[1]');
+    // const orderNumberInDetails = await globalPage.locator('//*[@id="pv_id_8_0_content"]/div/div/div[1]');
     // await expect(orderNumberInDetails).toBeVisible();
     await expect(submitButton).toBeEnabled();
     await expect(transferHasNotCompletedButton).toBeEnabled();
