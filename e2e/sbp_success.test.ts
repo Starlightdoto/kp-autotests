@@ -167,3 +167,33 @@ test('Transfer completed page', async () => {
     await expect(emailInputValidationErrorMessage).toBeVisible();
     await emailInput.fill('auto_test_sbp@test.com');
 });
+
+test('Attach receipt', async () => {
+    await globalPage.setInputFiles('//*[@id="dropzoneFile"]', [
+        'assets/receipts/receipt1.png'
+    ]);
+});
+
+test('Go to payment verification page', async () => {
+    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
+    await submitButton.click();
+    const backToReturnUrlButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
+    await expect(backToReturnUrlButton).toBeEnabled();
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[2]');
+    await expect(iDidNotMakeTransferButton).toBeEnabled();
+    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
+    const timer = timerRaw.split('');
+    await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+});
+
+test('Waiting for payment verification page - I did not make a transfer modal appears', async () => {
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[2]');
+    await iDidNotMakeTransferButton.click();
+    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    await expect(attachButton).toBeEnabled();
+    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
+    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await attachButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect(attachButton).toBeHidden();
+});
