@@ -5,13 +5,12 @@ import {currencies} from "./helpers/currencies";
 let globalPage;
 const sum = '500.00';
 const currencyCode = '643';
-
-
+const returnUrl = 'https://google.com';
 
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
-    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
+    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode, returnUrl);
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }

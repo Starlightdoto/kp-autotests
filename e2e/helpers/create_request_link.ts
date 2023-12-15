@@ -11,10 +11,14 @@ const currencySelectorLocator = 'body > form > p:nth-child(6) > select';
 const p2pCheckboxLocator = 'id=p2p';
 const sbpCheckboxLocator = 'id=sbp';
 const submitButtonLocator = 'body > form > p:nth-child(43) > input[type=submit]';
-const returnUrl = 'https://google.com';
 
-export const createSBPRequestLink = async ({page}, merchant, version, sum, currency) => {
+export const createSBPRequestLink = async ({page}, merchant, version, sum, currency, returnUrl = '', blocked = false, merchantUid = '', customer_uid = '') => {
     await page.goto(baseUrl);
+
+    if (blocked) {
+        const blockedUserCheckbox = await page.locator('//*[@id="block"]');
+        await blockedUserCheckbox.click();
+    }
 
     await page.fill(loginLocator, login);
 
@@ -36,7 +40,7 @@ export const createSBPRequestLink = async ({page}, merchant, version, sum, curre
     await p2pCheckbox.click();
     await sbpCheckbox.check();
     await page.click(submitButtonLocator);
-    await page.goto(`https://api.kiberpay.com/api/test/inrequest?login=${login}&pas=${password}&id_merch=${merchant}&pspname=${version}&amount=${sum}&currency=${currency}&rate=0&fee=0&amount_edit=true&sbp=true&qr_bank=4&callback_url=&success_url=&fail_url=&return_url=${returnUrl}&merchant_uid=&customer_uid=&customer_acc=&mail=&test=%7B%7D&q=Send`);
+    await page.goto(`https://api.kiberpay.com/api/test/inrequest?login=${login}&pas=${password}&id_merch=${merchant}&pspname=${version}&amount=${sum}&currency=${currency}&rate=0&fee=0&amount_edit=true&sbp=true&qr_bank=4&callback_url=&success_url=&fail_url=&return_url=${returnUrl}&merchant_uid=${merchantUid}&customer_uid=${customer_uid}&customer_acc=&mail=&test=%7B%7D&q=Send`);
     const requestUrl = await page.locator('body > p:nth-child(2) > a').textContent();
     return requestUrl;
 }
