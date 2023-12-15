@@ -106,32 +106,35 @@ test('Locale change - main page', async () => {
     const enButton = await globalPage.locator('//*[@id="pv_id_2_1"]/div/div');
     const uzButton = await globalPage.locator('//*[@id="pv_id_2_2"]/div/div');
     const ruButton = await globalPage.locator('//*[@id="pv_id_2_0"]/div/div');
-    // const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/div/p');
+
+    const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/div/p');
     const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i');
     const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
     const backModalButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    // const entransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span');
     await changeLocaleButton.click();
     await enButton.click();
     await globalPage.waitForTimeout(2000);
     const mainEnText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/p').textContent();
     await expect(mainEnText).toEqual('Transfer the exact amount:');
-    // await helpButton.click();
-    // await globalPage.waitForTimeout(5000);
-    // await entransferInstruction.click();
-    // const eNtransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span').textContent();
-    // await expect(entransferInstruction).toEqual('Transfer');
-    // await xButton. click();
-    // await backButton.click();
-    // const backModaltext = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray > span.p-button-label').textContent();
-    // await expect(backModaltext).toEqual('Cancel');
-    // await backModalButton.click();
+    await helpButton.click();
+    await globalPage.waitForTimeout(5000);
+    // const enTransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span');
+    // await enTransferInstruction.click();
+    const enTransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span').textContent();
+    await expect(enTransferInstruction).toEqual('Transfer');
+    await xButton. click();
+    await backButton.click();
+    const backModaltext = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray > span.p-button-label').textContent();
+    await expect(backModaltext).toEqual('Cancel');
+    await backModalButton.click();
     await changeLocaleButton.click();
+
     await uzButton.click();
     await globalPage.waitForTimeout(2000);
     const mainUzText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/p').textContent();
     await expect(mainUzText).toEqual('Belgilangan miqdorni otkazing:');
     await changeLocaleButton.click();
+
     await ruButton.click();
     await globalPage.waitForTimeout(2000);
     const mainRuText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/p').textContent();
@@ -167,6 +170,7 @@ test('Transfer completed page', async () => {
     await expect(emailInputValidationErrorMessage).toBeVisible();
     await emailInput.fill('auto_test_sbp@test.com');
 });
+
 
 test('Attach receipt', async () => {
     await globalPage.setInputFiles('//*[@id="dropzoneFile"]', [
