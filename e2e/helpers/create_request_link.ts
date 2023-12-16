@@ -12,7 +12,7 @@ const p2pCheckboxLocator = 'id=p2p';
 const sbpCheckboxLocator = 'id=sbp';
 const submitButtonLocator = 'body > form > p:nth-child(43) > input[type=submit]';
 
-export const createSBPRequestLink = async ({page}, merchant, version, sum, currency, returnUrl = '', blocked = false, merchantUid = '', customer_uid = '') => {
+export const createSBPRequestLink = async ({page}, merchant, version, sum, currency, returnUrl = '', blocked = false, merchantUid = '', customerUid = '') => {
     await page.goto(baseUrl);
 
     if (blocked) {
@@ -40,7 +40,11 @@ export const createSBPRequestLink = async ({page}, merchant, version, sum, curre
     await p2pCheckbox.click();
     await sbpCheckbox.check();
     await page.click(submitButtonLocator);
-    await page.goto(`https://api.kiberpay.com/api/test/inrequest?login=${login}&pas=${password}&id_merch=${merchant}&pspname=${version}&amount=${sum}&currency=${currency}&rate=0&fee=0&amount_edit=true&sbp=true&qr_bank=4&callback_url=&success_url=&fail_url=&return_url=${returnUrl}&merchant_uid=${merchantUid}&customer_uid=${customer_uid}&customer_acc=&mail=&test=%7B%7D&q=Send`);
+    if (!blocked) {
+        await page.goto(`https://api.kiberpay.com/api/test/inrequest?login=${login}&pas=${password}&id_merch=${merchant}&pspname=${version}&amount=${sum}&currency=${currency}&rate=0&fee=0&amount_edit=true&sbp=true&qr_bank=4&callback_url=&success_url=&fail_url=&return_url=${returnUrl}&merchant_uid=${merchantUid}&customer_uid=${customerUid}&customer_acc=&mail=&test=%7B%7D&q=Send`);
+    } else {
+        await page.goto(`https://api.kiberpay.com/api/test/inrequest?login=${login}&pas=${password}&id_merch=${merchant}&pspname=${version}&amount=${sum}&currency=${currency}&rate=0&fee=0&amount_edit=true&sbp=true&qr_bank=4&block=on&callback_url=&success_url=&fail_url=&return_url=${returnUrl}&merchant_uid=${merchantUid}&customer_uid=${customerUid}&customer_acc=&mail=&test=%7B%7D&q=Send`);
+    }
     const requestUrl = await page.locator('body > p:nth-child(2) > a').textContent();
     return requestUrl;
 }

@@ -69,33 +69,33 @@ test('Help modal window checks', async () => {
     const transferModal = await globalPage.locator('//*[@id="pv_id_9_0_content"]/div/div/div[1]');
     const statusModal = await globalPage.locator('//*[@id="pv_id_9_1_content"]/div/div/div[3]');
     await helpButton.click();
-    await expect (transferInstruction).toBeVisible();
-    await expect (statusInstruction).toBeVisible();
-    await expect (xButton).toBeVisible();
-    await transferInstruction. click();
-    await expect (transferModal). toBeVisible();
-    await transferInstruction. click();
-    await expect (transferModal). toBeHidden();
-    await statusInstruction. click();
-    await expect (statusModal). toBeVisible();
-    await statusInstruction. click();
-    await expect (statusModal). toBeHidden();
-    await xButton. click();
-    await expect (helpButton).toBeVisible();
+    await expect(transferInstruction).toBeVisible();
+    await expect(statusInstruction).toBeVisible();
+    await expect(xButton).toBeVisible();
+    await transferInstruction.click();
+    await expect(transferModal).toBeVisible();
+    await transferInstruction.click();
+    await expect(transferModal).toBeHidden();
+    await statusInstruction.click();
+    await expect(statusModal).toBeVisible();
+    await statusInstruction.click();
+    await expect(statusModal).toBeHidden();
+    await xButton.click();
+    await expect(helpButton).toBeVisible();
 });
 
 
 
 test('Cancel Modal Window checks', async () => {
     const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
-    const backModal = await globalPage. locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage. locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backModalButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const backModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
+    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
+    const backModalButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await backButton.click();
-    await expect (modalCancelButton). toBeEnabled;
-    await expect (backModalButton). toBeEnabled;
-    await backModalButton. click();
-    await expect (backModal). toBeHidden;
+    await expect (modalCancelButton).toBeEnabled;
+    await expect (backModalButton).toBeEnabled;
+    await backModalButton.click();
+    await expect (backModal).toBeHidden;
 });
 
 
@@ -109,7 +109,7 @@ test('Locale change - main page', async () => {
     const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/div/p');
     const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i');
     const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
-    const backModalButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const backModalButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await changeLocaleButton.click();
     await enButton.click();
     await globalPage.waitForTimeout(2000);
