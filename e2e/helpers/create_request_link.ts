@@ -10,7 +10,8 @@ const sumLocator = 'body > form > p:nth-child(5) > input[type=text]';
 const currencySelectorLocator = 'body > form > p:nth-child(6) > select';
 const p2pCheckboxLocator = 'id=p2p';
 const sbpCheckboxLocator = 'id=sbp';
-const submitButtonLocator = 'body > form > p:nth-child(43) > input[type=submit]';
+const submitButtonLocator = 'body > form > p:nth-child(44) > input[type=submit]';
+
 
 export const createSBPRequestLink = async ({page}, merchant, version, sum, currency, returnUrl = '', blocked = false, merchantUid = '', customerUid = '') => {
     await page.goto(baseUrl);

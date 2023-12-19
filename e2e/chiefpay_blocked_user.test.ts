@@ -4,12 +4,13 @@ import { createSBPRequestLink } from './helpers/create_request_link';
 let globalPage;
 const sum = '500.00';
 const currencyCode = '643';
+const returnUrl = 'https://google.com';
 
 
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
-    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode, 'https://google.com', true, '123123', '123123');
+    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode, returnUrl, true, '123123', '123123');
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }
