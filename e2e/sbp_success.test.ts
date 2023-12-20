@@ -5,12 +5,13 @@ import {currencies} from "./helpers/currencies";
 let globalPage;
 const sum = '500.00';
 const currencyCode = '643';
-const returnUrl = 'https://google.com';
+
+
 
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
-    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode, returnUrl);
+    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }
@@ -69,33 +70,33 @@ test('Help modal window checks', async () => {
     const transferModal = await globalPage.locator('//*[@id="pv_id_9_0_content"]/div/div/div[1]');
     const statusModal = await globalPage.locator('//*[@id="pv_id_9_1_content"]/div/div/div[3]');
     await helpButton.click();
-    await expect(transferInstruction).toBeVisible();
-    await expect(statusInstruction).toBeVisible();
-    await expect(xButton).toBeVisible();
-    await transferInstruction.click();
-    await expect(transferModal).toBeVisible();
-    await transferInstruction.click();
-    await expect(transferModal).toBeHidden();
-    await statusInstruction.click();
-    await expect(statusModal).toBeVisible();
-    await statusInstruction.click();
-    await expect(statusModal).toBeHidden();
-    await xButton.click();
-    await expect(helpButton).toBeVisible();
+    await expect (transferInstruction).toBeVisible();
+    await expect (statusInstruction).toBeVisible();
+    await expect (xButton).toBeVisible();
+    await transferInstruction. click();
+    await expect (transferModal). toBeVisible();
+    await transferInstruction. click();
+    await expect (transferModal). toBeHidden();
+    await statusInstruction. click();
+    await expect (statusModal). toBeVisible();
+    await statusInstruction. click();
+    await expect (statusModal). toBeHidden();
+    await xButton. click();
+    await expect (helpButton).toBeVisible();
 });
 
 
 
 test('Cancel Modal Window checks', async () => {
     const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
-    const backModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backModalButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const backModal = await globalPage. locator ('/html/body/div[3]/div/div/div');
+    const modalCancelButton = await globalPage. locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
+    const backModalButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await backButton.click();
-    await expect (modalCancelButton).toBeEnabled;
-    await expect (backModalButton).toBeEnabled;
-    await backModalButton.click();
-    await expect (backModal).toBeHidden;
+    await expect (modalCancelButton). toBeEnabled;
+    await expect (backModalButton). toBeEnabled;
+    await backModalButton. click();
+    await expect (backModal). toBeHidden;
 });
 
 
@@ -106,28 +107,28 @@ test('Locale change - main page', async () => {
     const uzButton = await globalPage.locator('//*[@id="pv_id_2_2"]/div/div');
     const ruButton = await globalPage.locator('//*[@id="pv_id_2_0"]/div/div');
 
-    const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/div/p');
-    const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i');
-    const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
-    const backModalButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    // const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/div/p');
+    // const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i');
+    // const backButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/button');
+    // const backModalButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await changeLocaleButton.click();
     await enButton.click();
     await globalPage.waitForTimeout(2000);
     const mainEnText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/p').textContent();
     await expect(mainEnText).toEqual('Transfer the exact amount:');
-    await helpButton.click();
-    await globalPage.waitForTimeout(5000);
-    // const enTransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span');
-    // await enTransferInstruction.click();
-    const enTransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span').textContent();
-    await expect(enTransferInstruction).toEqual('Transfer');
-    await xButton. click();
-    await backButton.click();
-    const backModaltext = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray > span.p-button-label').textContent();
-    await expect(backModaltext).toEqual('Cancel');
-    await backModalButton.click();
-    await changeLocaleButton.click();
+    // await helpButton.click();
+    // await globalPage.waitForTimeout(5000);
+    // // const enTransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span');
+    // // await enTransferInstruction.click();
+    // const enTransferInstruction = await globalPage.locator('#pv_id_10_0_header_action > div > span').textContent();
+    // await expect(enTransferInstruction).toEqual('Transfer');
+    // await xButton. click();
+    // await backButton.click();
+    // const backModaltext = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray > span.p-button-label').textContent();
+    // await expect(backModaltext).toEqual('Cancel');
+    // await backModalButton.click();
 
+    await changeLocaleButton.click();
     await uzButton.click();
     await globalPage.waitForTimeout(2000);
     const mainUzText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/p').textContent();

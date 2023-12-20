@@ -6,6 +6,7 @@
   "scripts": {
     "test": "npx playwright test --project chromium --headed",
     "test three_page": "npx playwright test three_page.test.ts --project chromium --headed",
+    "test cp_sbp": "npx playwright test chiefpay_sbp_success.test.ts --project chromium --headed",
     "test sbp": "npx playwright test sbp_success.test.ts --project chromium --headed",
     "test fail_1.1": "npx playwright sbp_fail_1(1)page.test.ts --project chromium --headed",
     "test fail_1.2": "npx playwright sbp_fail_1(2)page.test.ts --project chromium --headed",
