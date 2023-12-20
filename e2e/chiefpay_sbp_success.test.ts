@@ -137,7 +137,7 @@ test('Cancel Modal Window checks', async () => {
     await expect (yesButton).toBeEnabled;
     await expect (noButton).toBeEnabled;
     await noButton. click();
-    await expect (cancelModal). toBeHidden;
+    await expect (cancelModal).toBeHidden;
 
 });
 
