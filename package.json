@@ -8,11 +8,12 @@
     "test three_page": "npx playwright test three_page.test.ts --project chromium --headed",
     "test cp_sbp": "npx playwright test chiefpay_sbp_success.test.ts --project chromium --headed",
     "test sbp": "npx playwright test sbp_success.test.ts --project chromium --headed",
-    "test fail_1.1": "npx playwright sbp_fail_1(1)page.test.ts --project chromium --headed",
-    "test fail_1.2": "npx playwright sbp_fail_1(2)page.test.ts --project chromium --headed",
-    "test fail_2.1": "npx playwright sbp_fail_2(1)page.test.ts --project chromium --headed",
-    "test fail_2.2": "npx playwright sbp_fail_2(2)page.test.ts --project chromium --headed"
-
+    "test fail_1.1": "npx playwright test sbp_fail_1(1)page.test.ts --project chromium --headed",
+    "test fail_1.2": "npx playwright test sbp_fail_1(2)page.test.ts --project chromium --headed",
+    "test fail_2.1": "npx playwright test sbp_fail_2(1)page.test.ts --project chromium --headed",
+    "test fail_2.2": "npx playwright test sbp_fail_2(2)page.test.ts --project chromium --headed",
+    "test cp_blocked": "npx playwright test chiefpay_blocked_user.test.ts --project chromium --headed",
+    "test tp_blocked": "npx playwright test three_page_blocked_user.test.ts --project chromium --headed"
   },
   "keywords": [],
   "author": "",
