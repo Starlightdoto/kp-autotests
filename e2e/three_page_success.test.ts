@@ -6,6 +6,7 @@ let globalPage;
 const sum = '500.00';
 const currencyCode = '643';
 
+
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
@@ -15,15 +16,20 @@ test.beforeAll(async ({browser}, testInfo) => {
     }
 });
 
+
 test.afterAll(async () => {
     await globalPage.close();
 });
 
-test('The First Page buttons are active', async () => {
+
+test('The First Page Buttons and InputSum check', async () => {
     const proceedButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div/button');
     await expect(proceedButton).toBeEnabled();
+
     const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/button');
     await expect(cancelButton).toBeEnabled();
+
+    await expect(globalPage.locator('//*[@id="v-step-0"]/input')).toHaveValue('500');
 });
 
 
@@ -40,6 +46,7 @@ test('The First page Cancel Modal Window checks', async () => {
     await expect (cancelModal). toBeHidden;
 });
 
+
 test('Go to the Second page', async () => {
     const proceedButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div/button');
     await expect(proceedButton).toBeEnabled();
@@ -49,12 +56,12 @@ test('Go to the Second page', async () => {
     await expect(popupButton).toBeVisible();
 });
 
+
 test('Popup closing', async () => {
     const popupButton = globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[3]/div[2]/div[2]');
     await expect(popupButton).toBeVisible();
     await popupButton.click();
     await expect(popupButton).toBeHidden();
-
 });
 
 
@@ -77,6 +84,7 @@ test('The Second Page Main checks', async () => {
     await expect(cancelButton).toBeEnabled();
 });
 
+
 test('I agree with transfer rules checkbox checks', async () => {
     const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/div/button');
     await expect(completeButton).toBeEnabled();
@@ -95,8 +103,6 @@ test('I agree with transfer rules checkbox checks', async () => {
     await expect(xButton).toBeEnabled();
     await xButton. click();
     await expect (transferRulesModal).toBeHidden();
-
-
 });
 
 
@@ -115,7 +121,6 @@ test('Transfer rules modal window checks', async () => {
     await expect (transferRulesModal).toBeVisible();
     await okButton.click();
     await expect (transferRulesModal).toBeHidden();
-
 });
 
 test('Help modal window checks', async () => {
@@ -167,7 +172,7 @@ test('The Second Page Cancel Modal Window checks', async () => {
     await expect (cancelModal). toBeHidden;
 });
 
-test('Locale change - main page', async () => {
+test('Locale change - The Second page', async () => {
 
     const enButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[1]/div');
     const ruButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div');
@@ -181,6 +186,80 @@ test('Locale change - main page', async () => {
     await globalPage.waitForTimeout(2000);
     const mainRuText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p').textContent();
     await expect(mainRuText).toEqual('Перевод');
+});
+
+test('Go to the Third page', async () => {
+    const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/div/button');
+    await expect(completeButton).toBeEnabled();
+    await completeButton.click();
+    const headerText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[2]/p');
+    await expect(headerText).toBeVisible();
+
+});
 
 
+test('The Third page main checks', async () => {
+    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
+    const timer = timerRaw.split('');
+    await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+
+    const emailInput = await globalPage.locator('//*[@id="emailInput"]');
+    const transferDetailsBlock = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[1]');
+    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]');
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await transferDetailsBlock.click();
+    await globalPage.waitForTimeout(2000);
+    // const orderNumberInDetails = await globalPage.locator('//*[@id="pv_id_8_0_content"]/div/div/div[1]');
+    // await expect(orderNumberInDetails).toBeVisible();
+    await expect(submitButton).toBeEnabled();
+    await expect(iDidNotMakeTransferButton).toBeEnabled();
+    await submitButton.click();
+    const emailInputValidationErrorMessage = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__form > div.status__form-container > small');
+    await expect(emailInputValidationErrorMessage).toBeVisible();
+    await emailInput.fill('auto_test_treepagesbp@test.com');
+});
+
+
+test('The Third page - I did not make a transfer modal appears', async () => {
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await iDidNotMakeTransferButton.click();
+    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    await expect(attachButton).toBeEnabled();
+    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
+    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await attachButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect(attachButton).toBeHidden();
+});
+
+test('Attach receipt', async () => {
+    await globalPage.setInputFiles('//*[@id="drop-form"]/div/div/label/span', [
+        'assets/receipts/receipt1.png'
+    ]);
+});
+
+
+test('Go to payment verification page', async () => {
+    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]');
+    await submitButton.click();
+    // const backToReturnUrlButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
+    // await expect(backToReturnUrlButton).toBeEnabled();
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await expect(iDidNotMakeTransferButton).toBeEnabled();
+    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
+    const timer = timerRaw.split('');
+    await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+});
+
+
+test('Waiting for payment verification page - I did not make a transfer modal appears', async () => {
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await iDidNotMakeTransferButton.click();
+    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    await expect(attachButton).toBeEnabled();
+    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
+    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await attachButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect(attachButton).toBeHidden();
 });

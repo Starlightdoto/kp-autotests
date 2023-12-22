@@ -141,8 +141,6 @@ test('Locale change - main page', async () => {
     await expect(mainRuText).toEqual('Переведите точную сумму:');
 });
 
-
-
 test('Go to transfer completed page', async () => {
     const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[2]/div[3]/div/button');
     await expect(completeButton).toBeEnabled();
@@ -155,6 +153,7 @@ test('Transfer completed page', async () => {
     const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
     const timer = timerRaw.split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+
     const emailInput = await globalPage.locator('//*[@id="emailInput"]');
     const transferDetailsBlock = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[1]');
     const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
