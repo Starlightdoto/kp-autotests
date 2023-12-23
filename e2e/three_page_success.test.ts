@@ -111,9 +111,11 @@ test('Transfer rules modal window checks', async () => {
     await transferrulesButton.click();
     const transferRulesModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div');
     const okButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__footer > button');
+    const attachingBankReceiptButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__body > div:nth-child(3) > ul > li > span');
     const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__header > div > svg');
     await expect (transferRulesModal).toBeVisible();
     await expect(okButton).toBeEnabled();
+    await expect(attachingBankReceiptButton).toBeEnabled();
     await expect(xButton).toBeEnabled();
     await xButton. click();
     await expect (transferRulesModal).toBeHidden();
@@ -122,6 +124,50 @@ test('Transfer rules modal window checks', async () => {
     await okButton.click();
     await expect (transferRulesModal).toBeHidden();
 });
+
+
+test('Attaching Bank Receipt Modal Window checks', async () => {
+    const transferrulesButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[2]/p');
+    await transferrulesButton.click();
+    const attachingBankReceiptButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__body > div:nth-child(3) > ul > li > span');
+    await attachingBankReceiptButton.click();
+    await globalPage.waitForTimeout(2000);
+
+    const attachingBankReceiptModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
+    const submitButton = await globalPage.locator ('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__buttons > button.p-button.p-component.primary.modal-problem__buttons-send');
+    const cancelButton = await globalPage.locator ('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__buttons > button.p-button.p-component.secondary-gray.modal-problem__buttons-cancel');
+    await expect (attachingBankReceiptModal).toBeVisible;
+    await expect (submitButton).toBeEnabled;
+    await expect (cancelButton).toBeEnabled;
+    await cancelButton.click();
+    await expect (attachingBankReceiptModal).toBeHidden;
+
+    await transferrulesButton.click();
+    await attachingBankReceiptButton.click();
+
+    const commentInput = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__comment > textarea');
+    await commentInput.fill('auto_test_tree_page_sbp');
+
+    const emailInput = await globalPage. locator('//*[@id="emailInput"]');
+    await emailInput.fill('auto_test_tree_page_sbp@test.com');
+
+    const attachFilesZone  =await globalPage. locator('//*[@id="dropzoneFile"]');
+    await globalPage.setInputFiles('//*[@id="dropzoneFile"]', [
+        'assets/receipts/receipt1.png' ]);
+    await submitButton.click();
+    await globalPage.waitForTimeout(2000);
+
+    const requestHasBeenSentModal = await globalPage.locator('/html/body/div[3]/div/div/div');
+    const okButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > button')
+    await expect (requestHasBeenSentModal).toBeVisible;
+    await expect (okButton).toBeEnabled;
+
+    await okButton.click();
+    await expect (requestHasBeenSentModal).toBeHidden;
+
+
+});
+
 
 test('Help modal window checks', async () => {
     const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/p');
