@@ -36,16 +36,13 @@ test('Blocked user page elements are shown', async () => {
 });
 
 
-//blocked until locale is fixed
 test('Locale change', async () => {
     const accountIsBlockedHeaderText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div/div[1]/p').textContent();
-    await expect(accountIsBlockedHeaderText).toEqual('Account has been blocked');
-    const ruButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div');
-    await ruButton.click();
-    const accountIsBlockedHeaderTextAfterLocaleChange = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div/div[1]/p').textContent();
-    await expect(accountIsBlockedHeaderTextAfterLocaleChange).toEqual('Аккаунт заблокирован');
+    await expect(accountIsBlockedHeaderText).toEqual('Аккаунт заблокирован');
     const enButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[1]/div');
     await enButton.click();
+    const accountIsBlockedHeaderTextAfterLocaleChange = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div/div[1]/p').textContent();
+    await expect(accountIsBlockedHeaderTextAfterLocaleChange).toEqual('Account has been blocked');
 });
 
 

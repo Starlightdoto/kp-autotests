@@ -1,6 +1,5 @@
 import {test, expect} from '@playwright/test';
 import { createSBPRequestLink } from './helpers/create_request_link';
-import {currencies} from "./helpers/currencies";
 
 let globalPage;
 const sum = '500.00';

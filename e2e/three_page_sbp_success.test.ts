@@ -95,8 +95,6 @@ test('I agree with transfer rules checkbox checks', async () => {
     await expect(xButton).toBeEnabled();
     await xButton. click();
     await expect (transferRulesModal).toBeHidden();
-
-
 });
 
 
@@ -149,26 +147,24 @@ test('Help modal window checks', async () => {
     // await expect (waitForStatusChangeModal). toBeVisible();
     // await waitForStatusChangeInstruction. click();
     // await expect (waitForStatusChangeModal). toBeHidden();
-
-    await xButton. click();
+    await xButton.click();
     await expect (helpButton).toBeVisible();
 });
 
 test('The Second Page Cancel Modal Window checks', async () => {
     const cancelButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.transfer > div > div.transfer__buttons > button');
-    const cancelModal = await globalPage. locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage. locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const cancelModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
+    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
+    const backButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await cancelButton.click();
-    await expect (modalCancelButton). toBeVisible;
-    await expect (backButton). toBeVisible;
+    await expect (modalCancelButton).toBeVisible;
+    await expect (backButton).toBeVisible;
 
-    await backButton. click();
-    await expect (cancelModal). toBeHidden;
+    await backButton.click();
+    await expect (cancelModal).toBeHidden;
 });
 
 test('Locale change - main page', async () => {
-
     const enButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[1]/div');
     const ruButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div');
 
@@ -181,6 +177,4 @@ test('Locale change - main page', async () => {
     await globalPage.waitForTimeout(2000);
     const mainRuText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p').textContent();
     await expect(mainRuText).toEqual('Перевод');
-
-
 });
