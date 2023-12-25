@@ -41,7 +41,6 @@ test('The First page Cancel Modal Window checks', async () => {
     await cancelButton.click();
     await expect (modalCancelButton). toBeVisible;
     await expect (backButton). toBeVisible;
-
     await backButton. click();
     await expect (cancelModal). toBeHidden;
 });
@@ -69,17 +68,13 @@ test('The Second Page Main checks', async () => {
     const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[1]/div[2]').textContent();
     const timer = timerRaw.split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(10);
-
     const amount = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/div/p').textContent();
     console.log(amount);
     await expect(`${amount}`).toEqual('500');
-
     const phoneNumber = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div[2]/div[1]/div/p');
     await expect(phoneNumber).toBeVisible();
-
     const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/div/button');
     await expect(completeButton).toBeEnabled();
-
     const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/button');
     await expect(cancelButton).toBeEnabled();
 });
@@ -107,8 +102,8 @@ test('I agree with transfer rules checkbox checks', async () => {
 
 
 test('Transfer rules modal window checks', async () => {
-    const transferrulesButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[2]/p');
-    await transferrulesButton.click();
+    const transferRulesButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[2]/p');
+    await transferRulesButton.click();
     const transferRulesModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div');
     const okButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__footer > button');
     const attachingBankReceiptButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__body > div:nth-child(3) > ul > li > span');
@@ -119,7 +114,7 @@ test('Transfer rules modal window checks', async () => {
     await expect(xButton).toBeEnabled();
     await xButton. click();
     await expect (transferRulesModal).toBeHidden();
-    await transferrulesButton.click();
+    await transferRulesButton.click();
     await expect (transferRulesModal).toBeVisible();
     await okButton.click();
     await expect (transferRulesModal).toBeHidden();
@@ -200,26 +195,25 @@ test('Help modal window checks', async () => {
     // await expect (waitForStatusChangeModal). toBeVisible();
     // await waitForStatusChangeInstruction. click();
     // await expect (waitForStatusChangeModal). toBeHidden();
-
-    await xButton. click();
+    await xButton.click();
     await expect (helpButton).toBeVisible();
 });
 
 test('The Second Page Cancel Modal Window checks', async () => {
     const cancelButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.transfer > div > div.transfer__buttons > button');
-    const cancelModal = await globalPage. locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage. locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const cancelModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
+    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
+    const backButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await cancelButton.click();
-    await expect (modalCancelButton). toBeVisible;
-    await expect (backButton). toBeVisible;
+    await expect (modalCancelButton).toBeVisible;
+    await expect (backButton).toBeVisible;
 
-    await backButton. click();
-    await expect (cancelModal). toBeHidden;
+    await backButton.click();
+    await expect (cancelModal).toBeHidden;
 });
 
-test('Locale change - The Second page', async () => {
 
+test('Locale change - main page', async () => {
     const enButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[1]/div');
     const ruButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div');
 
