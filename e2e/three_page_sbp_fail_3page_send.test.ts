@@ -93,7 +93,7 @@ test('The Third page main checks', async () => {
     await submitButton.click();
     const emailInputValidationErrorMessage = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__form > div.status__form-container > small');
     await expect(emailInputValidationErrorMessage).toBeVisible();
-    await emailInput.fill('auto_test_treepagesbp@test.com');
+    await emailInput.fill('auto_test_treepage_sbp_fail_3page_send@test.com');
 });
 
 test('The Third page - I did not make a transfer modal appears', async () => {
@@ -113,10 +113,10 @@ test('Go to Cancellation Reason Modal Window', async () => {
     const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
     await iDidNotMakeTransferButton.click();
-    await expect (iDidNotMakeTransferButtonInModal). toBeEnabled;
-    await expect (attachButton). toBeEnabled;
-    await iDidNotMakeTransferButtonInModal. click();
-    await expect (iDidNotMakeTransferButtonInModal). toBeHidden;
+    await expect (iDidNotMakeTransferButtonInModal).toBeEnabled;
+    await expect (attachButton).toBeEnabled;
+    await iDidNotMakeTransferButtonInModal.click();
+    await expect (iDidNotMakeTransferButtonInModal).toBeHidden;
     const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
     await expect(cancellationReasonModalMainText).toBeVisible();
 });
@@ -125,19 +125,19 @@ test('Go to Cancellation Reason Modal Window', async () => {
 test('Cancellation with receipt attaching', async () => {
     const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
     const firstCheckbox = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(1) > div > div > div.p-checkbox-box');
-    const secondCheckbox = await globalPage. locator ('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box');
-    const commentInput = await globalPage. locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea');
-    const submitButton = await globalPage. locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > div > button');
-    const skipThisStepButton = await globalPage. locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > button');
+    const secondCheckbox = await globalPage.locator ('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box');
+    const commentInput = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea');
+    const submitButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > div > button');
+    const skipThisStepButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > button');
     await (firstCheckbox).click();
     await (secondCheckbox).click();
     await commentInput.fill ('auto_test_tree_page_sbp_fail_3page_send comment');
     await globalPage.setInputFiles('//*[@id="dropzoneFile"]', [
         'assets/receipts/receipt1.png']);
-    await expect (submitButton). toBeEnabled;
-    await expect (skipThisStepButton). toBeEnabled;
-    await submitButton. click();
-    await expect (cancellationReasonModalMainText). toBeHidden;
+    await expect (submitButton).toBeEnabled;
+    await expect (skipThisStepButton).toBeEnabled;
+    await submitButton.click();
+    await expect (cancellationReasonModalMainText).toBeHidden;
     await globalPage.waitForTimeout(3000);
     // const thankYouPageMainText = await globalPage.locator('');
     // await expect(thankYouPageMainText).toBeVisible();

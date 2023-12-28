@@ -73,15 +73,15 @@ test('Help modal window checks', async () => {
     await expect (transferInstruction).toBeVisible();
     await expect (statusInstruction).toBeVisible();
     await expect (xButton).toBeVisible();
-    await transferInstruction. click();
-    await expect (transferModal). toBeVisible();
-    await transferInstruction. click();
-    await expect (transferModal). toBeHidden();
-    await statusInstruction. click();
-    await expect (statusModal). toBeVisible();
-    await statusInstruction. click();
-    await expect (statusModal). toBeHidden();
-    await xButton. click();
+    await transferInstruction.click();
+    await expect (transferModal).toBeVisible();
+    await transferInstruction.click();
+    await expect (transferModal).toBeHidden();
+    await statusInstruction.click();
+    await expect (statusModal).toBeVisible();
+    await statusInstruction.click();
+    await expect (statusModal).toBeHidden();
+    await xButton.click();
     await expect (helpButton).toBeVisible();
 });
 

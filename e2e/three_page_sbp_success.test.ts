@@ -35,14 +35,14 @@ test('The First Page Buttons and InputSum check', async () => {
 
 test('The First page Cancel Modal Window checks', async () => {
     const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/button');
-    const cancelModal = await globalPage. locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage. locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const cancelModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
+    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
+    const backButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await cancelButton.click();
-    await expect (modalCancelButton). toBeVisible;
-    await expect (backButton). toBeVisible;
-    await backButton. click();
-    await expect (cancelModal). toBeHidden;
+    await expect (modalCancelButton).toBeVisible;
+    await expect (backButton).toBeVisible;
+    await backButton.click();
+    await expect (cancelModal).toBeHidden;
 });
 
 
@@ -112,7 +112,7 @@ test('Transfer rules modal window checks', async () => {
     await expect(okButton).toBeEnabled();
     await expect(attachingBankReceiptButton).toBeEnabled();
     await expect(xButton).toBeEnabled();
-    await xButton. click();
+    await xButton.click();
     await expect (transferRulesModal).toBeHidden();
     await transferRulesButton.click();
     await expect (transferRulesModal).toBeVisible();
@@ -140,13 +140,13 @@ test('Attaching Bank Receipt Modal Window checks', async () => {
     await transferrulesButton.click();
     await attachingBankReceiptButton.click();
 
-    const commentInput = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__comment > textarea');
+    const commentInput = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__comment > textarea');
     await commentInput.fill('auto_test_tree_page_sbp');
 
-    const emailInput = await globalPage. locator('//*[@id="emailInput"]');
+    const emailInput = await globalPage.locator('//*[@id="emailInput"]');
     await emailInput.fill('auto_test_tree_page_sbp@test.com');
 
-    const attachFilesZone  =await globalPage. locator('//*[@id="dropzoneFile"]');
+    const attachFilesZone  =await globalPage.locator('//*[@id="dropzoneFile"]');
     await globalPage.setInputFiles('//*[@id="dropzoneFile"]', [
         'assets/receipts/receipt1.png' ]);
     await submitButton.click();
@@ -181,20 +181,20 @@ test('Help modal window checks', async () => {
     // const transferModal = await globalPage.locator('//*[@id="pv_id_12_1_content"]/div/div/div[1]');
     // const waitForStatusChangeModal = await globalPage.locator('//*[@id="pv_id_12_2_content"]/div/div/div[1]');
 
-    // await transfeDetailsInstruction. click();
-    // await expect (transferDetailsModal). toBeVisible();
-    // await transfeDetailsInstruction. click();
-    // await expect (transferDetailsModal). toBeHidden();
+    // await transfeDetailsInstruction.click();
+    // await expect (transferDetailsModal).toBeVisible();
+    // await transfeDetailsInstruction.click();
+    // await expect (transferDetailsModal).toBeHidden();
     //
-    // await transferInstruction. click();
-    // await expect (transferModal). toBeVisible();
-    // await transferInstruction. click();
-    // await expect (transferModal). toBeHidden();
+    // await transferInstruction.click();
+    // await expect (transferModal).toBeVisible();
+    // await transferInstruction.click();
+    // await expect (transferModal).toBeHidden();
     //
-    // await waitForStatusChangeInstruction. click();
-    // await expect (waitForStatusChangeModal). toBeVisible();
-    // await waitForStatusChangeInstruction. click();
-    // await expect (waitForStatusChangeModal). toBeHidden();
+    // await waitForStatusChangeInstruction.click();
+    // await expect (waitForStatusChangeModal).toBeVisible();
+    // await waitForStatusChangeInstruction.click();
+    // await expect (waitForStatusChangeModal).toBeHidden();
     await xButton.click();
     await expect (helpButton).toBeVisible();
 });

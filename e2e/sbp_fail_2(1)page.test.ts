@@ -86,17 +86,17 @@ test('Go to Cancellation Reason Modal Window', async () => {
 test('Skip this step cancellation', async () => {
     const headerText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header');
     const firstCheckbox = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(1) > div > div > div.p-checkbox-box');
-    const secondCheckbox = await globalPage. locator ('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box');
-    const commentInput = await globalPage. locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea');
-    const submitButton = await globalPage. locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer > div > button');
-    const skipThisStepButton = await globalPage. locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer > button');
+    const secondCheckbox = await globalPage.locator ('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box');
+    const commentInput = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea');
+    const submitButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer > div > button');
+    const skipThisStepButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer > button');
     await expect(firstCheckbox).toBeVisible();
     await expect(secondCheckbox).toBeVisible();
     await expect(commentInput).toBeVisible();
-    await expect (submitButton). toBeEnabled;
-    await expect (skipThisStepButton). toBeEnabled;
-    await skipThisStepButton. click();
-    await expect (headerText). toBeHidden;
+    await expect (submitButton).toBeEnabled;
+    await expect (skipThisStepButton).toBeEnabled;
+    await skipThisStepButton.click();
+    await expect (headerText).toBeHidden;
     // const theRequestIsOutdatedText = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div > div');
     // await expect(theRequestIsOutdatedText).toBeVisible();
 });

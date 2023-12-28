@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import { createSBPRequestLink } from './helpers/create_request_link';
+import { createP2PRequestLink } from './helpers/create_request_link';
 
 
 let globalPage;
@@ -10,7 +10,7 @@ const currencyCode = '643';
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
-    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
+    const baseUrl = await createP2PRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }
@@ -22,19 +22,33 @@ test.afterAll(async () => {
 });
 
 
-test('The First Page Buttons and InputSum check', async () => {
-    const proceedButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div/button');
+test('The First Page Buttons, InputSum and BankDropdown check', async () => {
+    const proceedButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.application > div > div.application__buttons > div > button');
     await expect(proceedButton).toBeEnabled();
 
-    const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/button');
+    const cancelButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.application > div > div.application__buttons > button');
     await expect(cancelButton).toBeEnabled();
 
     await expect(globalPage.locator('//*[@id="v-step-0"]/input')).toHaveValue('500');
+
+    const bankDropdown = await globalPage.locator('//*[@id="pv_id_12"]/span');
+    await bankDropdown.click();
+    const anyOption = await globalPage.locator('//*[@id="pv_id_12_0"]/div');
+    const sberOption = await globalPage.locator('//*[@id="pv_id_12_1"]/div');
+    const tinkoffOption = await globalPage.locator('//*[@id="pv_id_12_2"]/div');
+    await expect(anyOption).toBeEnabled();
+    await expect(sberOption).toBeEnabled();
+    await expect(tinkoffOption).toBeEnabled();
+    await anyOption.click();
+    await expect(anyOption).toBeHidden();
+    await expect(sberOption).toBeHidden();
+    await expect(tinkoffOption).toBeHidden();
+
 });
 
 
 test('Go to the Second page', async () => {
-    const proceedButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div/button');
+    const proceedButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.application > div > div.application__buttons > div > button');
     await expect(proceedButton).toBeEnabled();
     await proceedButton.click();
     await globalPage.waitForTimeout(2000);
@@ -58,8 +72,8 @@ test('The Second Page Main checks', async () => {
     const amount = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/div/p').textContent();
     console.log(amount);
     await expect(`${amount}`).toEqual('500');
-    const phoneNumber = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div[2]/div[1]/div/p');
-    await expect(phoneNumber).toBeVisible();
+    const cardNumber = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div[2]/p');
+    await expect(cardNumber).toBeVisible();
     const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/div/button');
     await expect(completeButton).toBeEnabled();
     const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/button');
@@ -93,7 +107,7 @@ test('The Third page main checks', async () => {
     await submitButton.click();
     const emailInputValidationErrorMessage = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__form > div.status__form-container > small');
     await expect(emailInputValidationErrorMessage).toBeVisible();
-    await emailInput.fill('auto_test_treepage_sbp_fail_3page_skip@test.com');
+    await emailInput.fill('auto_test_tree_page_p2p_fail_4page_send@test.com');
 });
 
 test('The Third page - I did not make a transfer modal appears', async () => {
@@ -108,8 +122,42 @@ test('The Third page - I did not make a transfer modal appears', async () => {
     await expect(attachButton).toBeHidden();
 });
 
-test('Go to Cancellation Reason Modal Window', async () => {
+
+test('Attach receipt', async () => {
+    await globalPage.setInputFiles('//*[@id="drop-form"]/div/div/label/span', [
+        'assets/receipts/receipt1.png'
+    ]);
+});
+
+
+test('Go to payment verification page', async () => {
+    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]');
+    await submitButton.click();
+    // const backToReturnUrlButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
+    // await expect(backToReturnUrlButton).toBeEnabled();
     const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await expect(iDidNotMakeTransferButton).toBeEnabled();
+    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
+    const timer = timerRaw.split('');
+    await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+});
+
+
+test('Waiting for payment verification page - I did not make a transfer modal appears', async () => {
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await iDidNotMakeTransferButton.click();
+    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    await expect(attachButton).toBeEnabled();
+    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
+    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await attachButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect(attachButton).toBeHidden();
+});
+
+
+test('Go to Cancellation Reason Modal Window', async () => {
+    const iDidNotMakeTransferButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__return > button');
     const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
     await iDidNotMakeTransferButton.click();
@@ -117,25 +165,30 @@ test('Go to Cancellation Reason Modal Window', async () => {
     await expect (attachButton).toBeEnabled;
     await iDidNotMakeTransferButtonInModal.click();
     await expect (iDidNotMakeTransferButtonInModal).toBeHidden;
+    await globalPage.waitForTimeout(2000);
     const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
     await expect(cancellationReasonModalMainText).toBeVisible();
 });
 
-
-test('Skip this step cancellation', async () => {
+test('Cancellation with receipt attaching', async () => {
     const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
     const firstCheckbox = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(1) > div > div > div.p-checkbox-box');
     const secondCheckbox = await globalPage.locator ('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box');
     const commentInput = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea');
-    const submitButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer > div > button');
+    const submitButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > div > button');
     const skipThisStepButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > button');
-    await expect(firstCheckbox).toBeVisible();
-    await expect(secondCheckbox).toBeVisible();
-    await expect(commentInput).toBeVisible();
+    await (firstCheckbox).click();
+    await (secondCheckbox).click();
+    await commentInput.fill ('auto_test_tree_page_p2p_fail_4page_send_comment');
+    await globalPage.setInputFiles('//*[@id="dropzoneFile"]', [
+        'assets/receipts/receipt1.png']);
     await expect (submitButton).toBeEnabled;
     await expect (skipThisStepButton).toBeEnabled;
-    await skipThisStepButton.click();
+    await submitButton.click();
     await expect (cancellationReasonModalMainText).toBeHidden;
+    await globalPage.waitForTimeout(3000);
+    // const thankYouPageMainText = await globalPage.locator('');
+    // await expect(thankYouPageMainText).toBeVisible();
     const orderCancelledPageMainText = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div > div > p.cancelled__header');
     await expect(orderCancelledPageMainText).toBeVisible();
 });
