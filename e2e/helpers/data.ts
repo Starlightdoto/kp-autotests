@@ -1,0 +1,1 @@
+export const filePath = 'assets/receipts/receipt1.png';
