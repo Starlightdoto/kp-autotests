@@ -49,6 +49,14 @@ export class ThreePage {
     private submitButtonSelector = 'body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > div > button';
     private skipThisStepButtonSelector = 'body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > button';
     private dropZoneSelector = '//*[@id="dropzoneFile"]';
+    private headerTextSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[2]/p';
+    private transferDetailsBlockSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[1]';
+    private thirdPageSubmitButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]';
+    private iDidNotMakeTransferButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]';
+    private emailInputValidationErrorMessageSelector = '#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__form > div.status__form-container > small';
+    private attachButtonSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary';
+    private iDidNotMakeTransferButtonInModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray';
+    private thirdPageOrderCancelledPageMainTextSelector = '#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div > div > p.cancelled__header';
 
 
     constructor(page: Page) {
@@ -225,6 +233,38 @@ export class ThreePage {
 
     public get dropZone(): Locator {
         return this.page.locator(this.dropZoneSelector);
+    }
+
+    public get headerText(): Locator {
+        return this.page.locator(this.headerTextSelector);
+    }
+
+    public get transferDetailsBlock(): Locator {
+        return this.page.locator(this.transferDetailsBlockSelector);
+    }
+
+    public get thirdPageSubmitButton(): Locator {
+        return this.page.locator(this.thirdPageSubmitButtonSelector);
+    }
+
+    public get iDidNotMakeTransferButton(): Locator {
+        return this.page.locator(this.iDidNotMakeTransferButtonSelector);
+    }
+
+    public get emailInputValidationErrorMessage(): Locator {
+        return this.page.locator(this.emailInputValidationErrorMessageSelector);
+    }
+
+    public get attachButton(): Locator {
+        return this.page.locator(this.attachButtonSelector);
+    }
+
+    public get iDidNotMakeTransferButtonInModal(): Locator {
+        return this.page.locator(this.iDidNotMakeTransferButtonInModalSelector);
+    }
+
+    public get thirdPageOrderCancelledPageMainText(): Locator {
+        return this.page.locator(this.thirdPageOrderCancelledPageMainTextSelector);
     }
 
 }
