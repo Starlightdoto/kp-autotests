@@ -41,8 +41,8 @@ export class ThreePage {
     private amountSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/div/p';
     private cardNumberSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div[2]/p';
     private completeButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div[2]/p';
-    private secondPageCancelButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/button';
-    private cancellationReasonModalMainTextSelector = 'body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p';
+    private secondPageCancelButtonSelector = '#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.transfer > div > div.transfer__buttons > button';
+    private cancellationReasonModalMainTextSelector = 'body > div:nth-child(7) > div > div > div';
     private firstCheckboxSelector = 'body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(1) > div > div > div.p-checkbox-box';
     private secondCheckboxSelector = 'body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box';
     private commentInputSelector = 'body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea';

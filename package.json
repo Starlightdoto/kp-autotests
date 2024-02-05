@@ -13,9 +13,9 @@
     "test three_page_sbp_fail_3_send": "npx playwright test three_page_sbp_fail_3page_send.test.ts --project chromium --headed",
     "test three_page_sbp_fail_4_skip": "npx playwright test three_page_sbp_fail_4page_skip.test.ts --project chromium --headed",
     "test three_page_sbp_fail_4_send": "npx playwright test three_page_sbp_fail_4page_send.test.ts --project chromium --headed",
-    "test three_page_p2p": "npx playwright three_page_p2p_success.test.ts --project chromium --headed",
-    "test three_page_p2p_fail_1": "npx playwright test three_page_p2p_fail_1page.test.ts --project chromium --headed",
-    "test three_page_p2p_fail_2_skip": "npx playwright test three_page_p2p_fail_2page_skip.test.ts --project chromium --headed",
+    "test three_page_p2p": "npx playwright test three_page_p2p_success.test.ts --project chromium --headed",
+    "test three_page_p2p_fail_1": "npx playwright test tp_p2p_fail_1page.test.ts --project chromium --headed",
+    "test three_page_p2p_fail_2_skip": "npx playwright test tp_p2p_fail_2page_skip.test.ts --project chromium --headed",
     "test three_page_p2p_fail_2_send": "npx playwright test three_page_p2p_fail_2page_send.test.ts --project chromium --headed",
     "test three_page_p2p_fail_3_skip": "npx playwright test three_page_p2p_fail_3page_skip.test.ts --project chromium --headed",
     "test three_page_p2p_fail_3_send": "npx playwright test three_page_p2p_fail_3page_send.test.ts --project chromium --headed",
@@ -28,7 +28,7 @@
     "test fail_2.1": "npx playwright test sbp_fail_2(1)page.test.ts --project chromium --headed",
     "test fail_2.2": "npx playwright test sbp_fail_2(2)page.test.ts --project chromium --headed",
     "test cp_blocked": "npx playwright test chiefpay_blocked_user.test.ts --project chromium --headed",
-    "test tp_blocked": "npx playwright test three_page_blocked_user.test.ts --project chromium --headed"
+    "test tp_blocked": "npx playwright test tp_blocked_user.test.ts --project chromium --headed"
   },
   "keywords": [],
   "author": "",

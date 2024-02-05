@@ -72,11 +72,11 @@ test('The Second Page Main checks', async () => {
     await expect(`${amount}`).toEqual('500');
     await expect(threePage.cardNumber).toBeVisible();
     await expect(threePage.completeButton).toBeEnabled();
-    await expect(threePage.cancelButton).toBeEnabled();
+    await expect(threePage.secondPageCancelButton).toBeEnabled();
 });
 
 test('The Second Page Cancel Modal Window checks', async () => {
-    await threePage.cancelButton.click();
+    await threePage.secondPageCancelButton.click();
     await expect(threePage.modalCancelButton).toBeVisible;
     await expect(threePage.backButton).toBeVisible;
     await threePage.backButton.click();
@@ -84,7 +84,7 @@ test('The Second Page Cancel Modal Window checks', async () => {
 });
 
 test('Go to Cancellation Reason Modal Window', async () => {
-    await threePage.cancelButton.click();
+    await threePage.secondPageCancelButton.click();
     await expect(threePage.modalCancelButton).toBeEnabled;
     await expect(threePage.backButton).toBeEnabled;
     await threePage.modalCancelButton.click();
