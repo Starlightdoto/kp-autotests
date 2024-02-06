@@ -63,7 +63,7 @@ test('The Second Page Main checks', async () => {
     await expect(`${amount}`).toEqual('500');
     await expect(threePage.cardNumber).toBeVisible();
     await expect(threePage.completeButton).toBeEnabled();
-    await expect(threePage.cancelButton).toBeEnabled();
+    await expect(threePage.secondPageCancelButton).toBeEnabled();
 });
 
 test('Go to the Third page', async () => {
@@ -73,7 +73,7 @@ test('Go to the Third page', async () => {
 });
 
 test('The Third page main checks', async () => {
-    const timer = (await threePage.timerRaw).split('');
+    const timer = (await threePage.thirdPageTimerRaw).split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(3);
     await threePage.transferDetailsBlock.click();
     await globalPage.waitForTimeout(2000);
