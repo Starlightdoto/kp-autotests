@@ -1,12 +1,15 @@
 import {test, expect} from '@playwright/test';
-import { createP2PRequestLink } from './helpers/create_request_link';
-import {ThreePage} from "./pages/threePage";
+import { createP2PRequestLink } from '../helpers/create_request_link';
+import {ThreePage} from "../pages/threePage";
+import { filePath } from "../helpers/data";
+
 
 let globalPage;
 const sum = '500.00';
 const currencyCode = '643';
 
 let threePage: ThreePage;
+
 
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
@@ -28,17 +31,13 @@ test.afterAll(async () => {
 test('The First Page Buttons, InputSum and BankDropdown check', async () => {
     await expect(threePage.proceedButton).toBeEnabled();
     await expect(threePage.cancelButton).toBeEnabled();
-
     await expect(threePage.inputSum).toHaveValue('500');
     await threePage.bankDropdown.click();
     await expect(threePage.anyOption).toBeEnabled();
     await expect(threePage.sberOption).toBeEnabled();
-    // await expect(threePage.tinkoffOption).toBeEnabled();
     await threePage.anyOption.click();
     await expect(threePage.anyOption).toBeHidden();
     await expect(threePage.sberOption).toBeHidden();
-    // await expect(threePage.tinkoffOption).toBeHidden();
-
 });
 
 test('The First page Cancel Modal Window checks', async () => {
@@ -93,13 +92,16 @@ test('Go to Cancellation Reason Modal Window', async () => {
 });
 
 
-test('Skip this step cancellation', async () => {
-    await expect(threePage.firstCheckbox).toBeVisible();
-    await expect(threePage.secondCheckbox).toBeVisible();
-    await expect(threePage.commentInput).toBeVisible();
+test('Cancellation with receipt attaching', async () => {
+    await (threePage.firstCheckbox).click();
+    await (threePage.secondCheckbox).click();
+    await threePage.commentInput.fill ('auto_test_tree_page_p2p_fail_2page_send comment');
+    await globalPage.setInputFiles(threePage.dropZoneSelector, [
+        filePath]);
     await expect(threePage.submitButton).toBeEnabled;
     await expect(threePage.skipThisStepButton).toBeEnabled;
-    await threePage.skipThisStepButton.click();
+    await threePage.submitButton. click();
     await expect(threePage.cancellationReasonModalMainText).toBeHidden;
+    await globalPage.waitForTimeout(3000);
     await expect(threePage.orderCancelledPageMainText).toBeVisible();
 });

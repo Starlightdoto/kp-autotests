@@ -1,7 +1,7 @@
 import {test, expect} from '@playwright/test';
-import { createP2PRequestLink } from './helpers/create_request_link';
-import {ThreePage} from "./pages/threePage";
-import { filePath } from "./helpers/data";
+import { createP2PRequestLink } from '../helpers/create_request_link';
+import {ThreePage} from "../pages/threePage";
+import { filePath } from "../helpers/data";
 
 let globalPage;
 const sum = '500.00';
@@ -76,6 +76,7 @@ test('Go to the Third page', async () => {
     await globalPage.waitForTimeout(2000);
     await expect(threePage.thirdPageSubmitButton).toBeEnabled();
     await expect(threePage.headerText).toBeVisible();
+
 });
 
 test('The Third page main checks', async () => {
@@ -89,7 +90,7 @@ test('The Third page main checks', async () => {
     await expect(threePage.iDidNotMakeTransferButton).toBeEnabled();
     await threePage.thirdPageSubmitButton.click();
     await expect(threePage.emailInputValidationErrorMessage).toBeVisible();
-    await threePage.emailInput.fill('auto_test_treepage_p2p_fail_3page_send@test.com');
+    await threePage.emailInput.fill('auto_test_treepage_p2p_fail_4page_skip@test.com');
 });
 
 test('The Third page - I did not make a transfer modal appears', async () => {
@@ -101,28 +102,50 @@ test('The Third page - I did not make a transfer modal appears', async () => {
     await expect(threePage.attachButton).toBeHidden();
 });
 
-test('Go to Cancellation Reason Modal Window', async () => {
+
+test('Attach receipt', async () => {
+    await globalPage.setInputFiles(threePage.dropZoneSelector, [
+        filePath]);
+});
+
+
+test('Go to payment verification page', async () => {
+    await threePage.thirdPageSubmitButton.click();
+    // const backToReturnUrlButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
+    // await expect(backToReturnUrlButton).toBeEnabled();
+    await expect(threePage.iDidNotMakeTransferButton).toBeEnabled();
+    const timer = (await threePage.thirdPageTimerRaw).split('');
+    await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+});
+
+
+test('Waiting for payment verification page - I did not make a transfer modal appears', async () => {
     await threePage.iDidNotMakeTransferButton.click();
+    await expect(threePage.attachButton).toBeEnabled();
+    await expect(threePage.iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await threePage.attachButton.click();
+    await globalPage.waitForTimeout(4000);
+    await expect(threePage.attachButton).toBeHidden();
+});
+
+
+test('Go to Cancellation Reason Modal Window', async () => {
+    await threePage.iDidNotMakeTransferButton4Page.click();
     await expect(threePage.iDidNotMakeTransferButtonInModal).toBeEnabled;
     await expect(threePage.attachButton).toBeEnabled;
     await threePage.iDidNotMakeTransferButtonInModal.click();
     await expect(threePage.iDidNotMakeTransferButtonInModal).toBeHidden;
+    await globalPage.waitForTimeout(4000);
     await expect(threePage.cancellationReasonModalMainText).toBeVisible();
 });
 
 
-test('Cancellation with receipt attaching', async () => {
-    await (threePage.firstCheckbox).click();
-    await (threePage.secondCheckbox).click();
-    await threePage.commentInput.fill ('auto_test_tree_page_p2p_fail_3page_send_comment');
-    await globalPage.setInputFiles(threePage.dropZoneSelector, [
-        filePath]);
+test('Skip this step cancellation', async () => {
+    await expect(threePage.firstCheckbox).toBeVisible();
+    await expect(threePage.secondCheckbox).toBeVisible();
+    await expect(threePage.commentInput).toBeVisible();
     await expect(threePage.submitButton).toBeEnabled;
     await expect(threePage.skipThisStepButton).toBeEnabled;
-    await threePage.submitButton.click();
+    await threePage.skipThisStepButton.click();
     await expect(threePage.cancellationReasonModalMainText).toBeHidden;
-    await globalPage.waitForTimeout(3000);
-    // const thankYouPageMainText = await globalPage.locator('');
-    // await expect(thankYouPageMainText).toBeVisible();
-    await expect(threePage.thirdPageOrderCancelledPageMainText).toBeVisible();
-});
+    await expect(threePage.orderCancelledPageMainText).toBeVisible();});

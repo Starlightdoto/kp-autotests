@@ -58,6 +58,19 @@ export class ThreePage {
     private iDidNotMakeTransferButtonInModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray';
     private thirdPageOrderCancelledPageMainTextSelector = '#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div > div > p.cancelled__header';
     private thirdPageTimerRowSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]';
+    private iDidNotMakeTransferButton4PageSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button';
+    private iAgreeCheckboxSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[5]/div/div/div[2]';
+    private transferRulesSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[5]/div/span';
+    private xButtonNewSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__header > div > svg';
+    private attachingBankReceiptButtonSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.transfer-rules-modal__body > div:nth-child(3) > ul > li > span';
+    private attachingBankReceiptModalSelector = '/html/body/div[3]/div/div/div';
+    private submitButtonInAttachingBankReceiptModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__buttons > button.p-button.p-component.primary.modal-problem__buttons-send';
+    private cancelButtonInAttachingBankReceiptModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__buttons > button.p-button.p-component.secondary-gray.modal-problem__buttons-cancel';
+    private commentInputInAttachingBankReceiptModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__comment > textarea';
+    private emailInputInAttachingBankReceiptModalSelector = '//*[@id="emailInput"]';
+    public attachFilesZoneInAttachingBankReceiptModalSelectorSelector = '//*[@id="dropzoneFile"]';
+    private requestHasBeenSentModalSelector = '/html/body/div[3]/div/div/div';
+    private okButtonInRequestHasBeenSentModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > button';
 
 
 
@@ -268,5 +281,55 @@ export class ThreePage {
     public get thirdPageTimerRaw(): Promise<string | null> {
         return this.page.locator(this.thirdPageTimerRowSelector).textContent();
     }
+
+    public get iDidNotMakeTransferButton4Page(): Locator {
+        return this.page.locator(this.iDidNotMakeTransferButton4PageSelector);
+    }
+
+    public get iAgreeCheckbox(): Locator {
+        return this.page.locator(this.iAgreeCheckboxSelector);
+    }
+
+    public get transferRules(): Locator {
+        return this.page.locator(this.transferRulesSelector);
+    }
+
+    public get xButtonNew(): Locator {
+        return this.page.locator(this.xButtonNewSelector);
+    }
+
+    public get attachingBankReceiptButton(): Locator {
+        return this.page.locator(this.attachingBankReceiptButtonSelector);
+    }
+
+    public get attachingBankReceiptModal(): Locator {
+        return this.page.locator(this.attachingBankReceiptModalSelector);
+    }
+
+
+    public get submitButtonInAttachingBankReceiptModal(): Locator {
+        return this.page.locator(this.submitButtonInAttachingBankReceiptModalSelector);
+    }
+
+    public get cancelButtonInAttachingBankReceiptModal(): Locator {
+        return this.page.locator(this.cancelButtonInAttachingBankReceiptModalSelector);
+    }
+
+    public get commentInputInAttachingBankReceiptModal(): Locator {
+        return this.page.locator(this.commentInputInAttachingBankReceiptModalSelector);
+    }
+
+    public get emailInputInAttachingBankReceiptModal(): Locator {
+        return this.page.locator(this.emailInputInAttachingBankReceiptModalSelector);
+    }
+
+    public get requestHasBeenSentModal(): Locator {
+        return this.page.locator(this.requestHasBeenSentModalSelector);
+    }
+
+    public get okButtonInRequestHasBeenSentModal(): Locator {
+        return this.page.locator(this.okButtonInRequestHasBeenSentModalSelector);
+    }
+
 
 }

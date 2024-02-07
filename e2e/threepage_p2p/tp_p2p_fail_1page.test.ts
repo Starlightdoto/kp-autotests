@@ -1,7 +1,7 @@
 
 import {test, expect} from '@playwright/test';
-import { createP2PRequestLink } from './helpers/create_request_link';
-import { ThreePage } from './pages/threePage';
+import { createP2PRequestLink } from '../helpers/create_request_link';
+import { ThreePage } from '../pages/threePage';
 
 let globalPage;
 const sum = '500.00';

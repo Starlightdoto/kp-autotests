@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import { createSBPRequestLink } from './helpers/create_request_link';
+import { createSBPRequestLink } from '../helpers/create_request_link';
 
 
 let globalPage;

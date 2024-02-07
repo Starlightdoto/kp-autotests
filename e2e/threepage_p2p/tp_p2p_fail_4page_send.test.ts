@@ -1,7 +1,7 @@
 import {test, expect} from '@playwright/test';
-import { createP2PRequestLink } from './helpers/create_request_link';
-import {ThreePage} from "./pages/threePage";
-import { filePath } from "./helpers/data";
+import { createP2PRequestLink } from '../helpers/create_request_link';
+import {ThreePage} from "../pages/threePage";
+import { filePath } from "../helpers/data";
 
 let globalPage;
 const sum = '500.00';
@@ -30,11 +30,8 @@ test.afterAll(async () => {
 
 test('The First Page Buttons, InputSum and BankDropdown check', async () => {
     await expect(threePage.proceedButton).toBeEnabled();
-
     await expect(threePage.cancelButton).toBeEnabled();
-
     await expect(threePage.inputSum).toHaveValue('500');
-
     await threePage.bankDropdown.click();
     await expect(threePage.anyOption).toBeEnabled();
     await expect(threePage.sberOption).toBeEnabled();
@@ -124,7 +121,6 @@ test('Go to payment verification page', async () => {
 
 test('Waiting for payment verification page - I did not make a transfer modal appears', async () => {
     await threePage.iDidNotMakeTransferButton.click();
-    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
     await expect(threePage.attachButton).toBeEnabled();
     await expect(threePage.iDidNotMakeTransferButtonInModal).toBeEnabled();
     await threePage.attachButton.click();
@@ -134,28 +130,17 @@ test('Waiting for payment verification page - I did not make a transfer modal ap
 
 
 test('Go to Cancellation Reason Modal Window', async () => {
-    // const iDidNotMakeTransferButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__return > button');
-    // const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    // const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
-    await threePage.iDidNotMakeTransferButton.click();
+    await threePage.iDidNotMakeTransferButton4Page.click();
     await expect(threePage.iDidNotMakeTransferButtonInModal).toBeEnabled;
     await expect(threePage.attachButton).toBeEnabled;
-
     await threePage.iDidNotMakeTransferButtonInModal.click();
     await expect(threePage.iDidNotMakeTransferButtonInModal).toBeHidden;
     await globalPage.waitForTimeout(2000);
-    // const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
     await expect(threePage.cancellationReasonModalMainText).toBeVisible();
 
 });
 
 test('Cancellation with receipt attaching', async () => {
-    // const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
-    // const firstCheckbox = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(1) > div > div > div.p-checkbox-box');
-    // const secondCheckbox = await globalPage.locator ('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > div.reason-modal__checkboxes > div:nth-child(2) > div > div > div.p-checkbox-box');
-    // const commentInput = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea');
-    // const submitButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > div > button');
-    // const skipThisStepButton = await globalPage.locator('body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > button');
     await (threePage.firstCheckbox).click();
     await (threePage.secondCheckbox).click();
     await threePage.commentInput.fill ('auto_test_tree_page_p2p_fail_4page_send_comment');
@@ -166,8 +151,5 @@ test('Cancellation with receipt attaching', async () => {
     await threePage.submitButton.click();
     await expect(threePage.cancellationReasonModalMainText).toBeHidden;
     await globalPage.waitForTimeout(3000);
-    // const thankYouPageMainText = await globalPage.locator('');
-    // await expect(thankYouPageMainText).toBeVisible();
-    // const orderCancelledPageMainText = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div > div > p.cancelled__header');
     await expect(threePage.thirdPageOrderCancelledPageMainText).toBeVisible();
 });

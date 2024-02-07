@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test --project chromium --headed",
-    "test three_page_sbp": "npx playwright test three_page_sbp_success.test.ts --project chromium --headed",
+    "test three_page_sbp": "npx playwright test tp_sbp_success.test.ts --project chromium --headed",
     "test three_page_sbp_fail_1": "npx playwright test three_page_sbp_fail_1page.test.ts --project chromium --headed",
     "test three_page_sbp_fail_2_skip": "npx playwright test three_page_sbp_fail_2page_skip.test.ts --project chromium --headed",
     "test three_page_sbp_fail_2_send": "npx playwright test three_page_sbp_fail_2page_send.test.ts --project chromium --headed",

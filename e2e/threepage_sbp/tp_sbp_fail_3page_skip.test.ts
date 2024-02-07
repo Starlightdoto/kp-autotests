@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import { createSBPRequestLink } from './helpers/create_request_link';
+import { createSBPRequestLink } from '../helpers/create_request_link';
 
 
 let globalPage;
@@ -30,19 +30,6 @@ test('The First Page Buttons and InputSum check', async () => {
     await expect(cancelButton).toBeEnabled();
 
     await expect(globalPage.locator('//*[@id="v-step-0"]/input')).toHaveValue('500');
-});
-
-
-test('The First page Cancel Modal Window checks', async () => {
-    const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/button');
-    const cancelModal = await globalPage. locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage. locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backButton = await globalPage. locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    await cancelButton.click();
-    await expect (modalCancelButton). toBeVisible;
-    await expect (backButton). toBeVisible;
-    await backButton. click();
-    await expect (cancelModal). toBeHidden;
 });
 
 
@@ -79,29 +66,57 @@ test('The Second Page Main checks', async () => {
     await expect(cancelButton).toBeEnabled();
 });
 
-test('The Second Page Cancel Modal Window checks', async () => {
-    const cancelButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.transfer > div > div.transfer__buttons > button');
-    const cancelModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    await cancelButton.click();
-    await expect (modalCancelButton).toBeVisible;
-    await expect (backButton).toBeVisible;
+test('Go to the Third page', async () => {
+    const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/div/button');
+    await expect(completeButton).toBeEnabled();
+    await completeButton.click();
+    const headerText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[2]/p');
+    await expect(headerText).toBeVisible();
 
-    await backButton.click();
-    await expect (cancelModal).toBeHidden;
+});
+
+test('The Third page main checks', async () => {
+    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
+    const timer = timerRaw.split('');
+    await expect(Number(timer[0])).toBeLessThanOrEqual(3);
+
+    const emailInput = await globalPage.locator('//*[@id="emailInput"]');
+    const transferDetailsBlock = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[1]');
+    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]');
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await transferDetailsBlock.click();
+    await globalPage.waitForTimeout(2000);
+    // const orderNumberInDetails = await globalPage.locator('//*[@id="pv_id_8_0_content"]/div/div/div[1]');
+    // await expect(orderNumberInDetails).toBeVisible();
+    await expect(submitButton).toBeEnabled();
+    await expect(iDidNotMakeTransferButton).toBeEnabled();
+    await submitButton.click();
+    const emailInputValidationErrorMessage = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__form > div.status__form-container > small');
+    await expect(emailInputValidationErrorMessage).toBeVisible();
+    await emailInput.fill('auto_test_treepage_sbp_fail_3page_skip@test.com');
+});
+
+test('The Third page - I did not make a transfer modal appears', async () => {
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    await iDidNotMakeTransferButton.click();
+    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    await expect(attachButton).toBeEnabled();
+    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
+    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await attachButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect(attachButton).toBeHidden();
 });
 
 test('Go to Cancellation Reason Modal Window', async () => {
-    const cancelButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.transfer > div > div.transfer__buttons > button');
-    const cancelModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
-    const backButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    await cancelButton.click();
-    await expect (modalCancelButton).toBeEnabled;
-    await expect (backButton).toBeEnabled;
-    await modalCancelButton.click();
-    await expect (cancelModal).toBeHidden;
+    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
+    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
+    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
+    await iDidNotMakeTransferButton.click();
+    await expect (iDidNotMakeTransferButtonInModal).toBeEnabled;
+    await expect (attachButton).toBeEnabled;
+    await iDidNotMakeTransferButtonInModal.click();
+    await expect (iDidNotMakeTransferButtonInModal).toBeHidden;
     const cancellationReasonModalMainText = await globalPage.locator('body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__header > p');
     await expect(cancellationReasonModalMainText).toBeVisible();
 });
