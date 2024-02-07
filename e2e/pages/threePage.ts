@@ -48,7 +48,7 @@ export class ThreePage {
     private commentInputSelector = 'body > div:nth-child(7) > div > div > div > div:nth-child(1) > div.reason-modal__body > textarea';
     private submitButtonSelector = 'body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > div > button';
     private skipThisStepButtonSelector = 'body > div:nth-child(7) > div > div > div > div.reason-modal__footer-container > div > button';
-    private dropZoneSelector = '//*[@id="dropzoneFile"]';
+    public dropZoneSelector = '//*[@id="dropzoneFile"]';
     private headerTextSelector = '#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status';
     private transferDetailsBlockSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[1]';
     private thirdPageSubmitButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]';
@@ -231,10 +231,6 @@ export class ThreePage {
 
     public get cancellationReasonModalMainText(): Locator {
         return this.page.locator(this.cancellationReasonModalMainTextSelector);
-    }
-
-    public get dropZone(): Locator {
-        return this.page.locator(this.dropZoneSelector);
     }
 
     public get headerText(): Locator {

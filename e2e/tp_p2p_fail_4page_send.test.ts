@@ -106,7 +106,7 @@ test('The Third page - I did not make a transfer modal appears', async () => {
 
 
 test('Attach receipt', async () => {
-    await globalPage.setInputFiles(threePage.dropZone, [
+    await globalPage.setInputFiles(threePage.dropZoneSelector, [
         filePath]);
 });
 
@@ -159,7 +159,7 @@ test('Cancellation with receipt attaching', async () => {
     await (threePage.firstCheckbox).click();
     await (threePage.secondCheckbox).click();
     await threePage.commentInput.fill ('auto_test_tree_page_p2p_fail_4page_send_comment');
-    await globalPage.setInputFiles(threePage.dropZone, [
+    await globalPage.setInputFiles(threePage.dropZoneSelector, [
         filePath]);
     await expect(threePage.submitButton).toBeEnabled;
     await expect(threePage.skipThisStepButton).toBeEnabled;
