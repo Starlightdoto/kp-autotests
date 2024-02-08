@@ -71,6 +71,11 @@ export class ThreePage {
     public attachFilesZoneInAttachingBankReceiptModalSelectorSelector = '//*[@id="dropzoneFile"]';
     private requestHasBeenSentModalSelector = '/html/body/div[3]/div/div/div';
     private okButtonInRequestHasBeenSentModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > button';
+    private helpButtonNewSelector = '//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/p';
+    private xButtonInHelpModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i';
+    private ruButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div';
+    private mainEnTextSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p';
+    private mainRuTextSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p';
 
 
 
@@ -331,5 +336,24 @@ export class ThreePage {
         return this.page.locator(this.okButtonInRequestHasBeenSentModalSelector);
     }
 
+    public get helpButtonNew(): Locator {
+        return this.page.locator(this.helpButtonNewSelector);
+    }
+
+    public get xButtonInHelpModal(): Locator {
+        return this.page.locator(this.xButtonInHelpModalSelector);
+    }
+
+    public get ruButton(): Locator {
+        return this.page.locator(this.ruButtonSelector);
+    }
+
+    public get mainEnText(): Locator {
+        return this.page.locator(this.mainEnTextSelector);
+    }
+
+    public get mainRuText(): Locator {
+        return this.page.locator(this.mainRuTextSelector);
+    }
 
 }

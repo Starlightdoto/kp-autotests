@@ -131,13 +131,13 @@ test('Attaching Bank Receipt Modal Window checks', async () => {
 
 
 test('Help modal window checks', async () => {
-    const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/p');
-    await helpButton.click();
+    // const helpButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/p');
+    await threePage.helpButtonNew.click();
     await globalPage.waitForTimeout(2000);
     // const transfeDetailsInstruction = await globalPage.locator('//*[@id="pv_id_14_0_header_action"]');
     // const transferInstruction = await globalPage.locator('//*[@id="pv_id_12_1_header_action"]');
     // const waitForStatusChangeInstruction = await globalPage.locator('//*[@id="pv_id_12_2_header_action"]');
-    const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i');
+    //  const xButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div.instruction-modal__header > i');
     // await expect (transfeDetailsInstruction).toBeVisible();
     // await expect (transferInstruction).toBeVisible();
     // await expect (waitForStatusChangeInstruction).toBeVisible();
@@ -161,111 +161,85 @@ test('Help modal window checks', async () => {
     // await expect (waitForStatusChangeModal). toBeVisible();
     // await waitForStatusChangeInstruction. click();
     // await expect (waitForStatusChangeModal). toBeHidden();
-    await xButton.click();
-    await expect (helpButton).toBeVisible();
+    await threePage.xButtonInHelpModal.click();
+    await expect (threePage.helpButton).toBeVisible();
 });
 
 test('The Second Page Cancel Modal Window checks', async () => {
-    const cancelButton = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div > div.transfer > div > div.transfer__buttons > button');
-    const cancelModal = await globalPage.locator ('/html/body/div[3]/div/div/div');
-    const modalCancelButton = await globalPage.locator('/html/body/div[3]/div/div/div/div[2]/button[1]');
-    const backButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    await cancelButton.click();
-    await expect (modalCancelButton).toBeVisible;
-    await expect (backButton).toBeVisible;
-
-    await backButton.click();
-    await expect (cancelModal).toBeHidden;
+    await threePage.secondPageCancelButton.click();
+    await expect(threePage.modalCancelButton).toBeVisible;
+    await expect(threePage.backButton).toBeVisible;
+    await threePage.backButton.click();
+    await expect(threePage.cancelModal).toBeHidden;
 });
 
 
 test('Locale change - main page', async () => {
-    const enButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[1]/div');
-    const ruButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div');
-
-    await enButton.click();
+    await threePage.enButton.click();
     await globalPage.waitForTimeout(2000);
-    const mainEnText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p').textContent();
-    await expect(mainEnText).toEqual('Transfer');
-
-    await ruButton.click();
+    const textContent = await threePage.mainEnText.textContent();
+    await expect(textContent).toEqual('Transfer');
+    await threePage.ruButton.click();
     await globalPage.waitForTimeout(2000);
-    const mainRuText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p').textContent();
-    await expect(mainRuText).toEqual('Перевод');
+    const newTextContent = await threePage.mainRuText.textContent();
+    await expect(newTextContent).toEqual('Перевод');
 });
 
 test('Go to the Third page', async () => {
-    const completeButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[6]/div/button');
-    await expect(completeButton).toBeEnabled();
-    await completeButton.click();
-    const headerText = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[2]/p');
-    await expect(headerText).toBeVisible();
+    await expect(threePage.completeButton).toBeEnabled();
+    await threePage.completeButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect(threePage.thirdPageSubmitButton).toBeEnabled();
+    await expect(threePage.headerText).toBeVisible();
 
 });
 
 
 test('The Third page main checks', async () => {
-    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
-    const timer = timerRaw.split('');
+    const timer = (await threePage.thirdPageTimerRaw).split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(3);
-
-    const emailInput = await globalPage.locator('//*[@id="emailInput"]');
-    const transferDetailsBlock = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[1]');
-    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]');
-    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
-    await transferDetailsBlock.click();
+    await threePage.transferDetailsBlock.click();
     await globalPage.waitForTimeout(2000);
     // const orderNumberInDetails = await globalPage.locator('//*[@id="pv_id_8_0_content"]/div/div/div[1]');
     // await expect(orderNumberInDetails).toBeVisible();
-    await expect(submitButton).toBeEnabled();
-    await expect(iDidNotMakeTransferButton).toBeEnabled();
-    await submitButton.click();
-    const emailInputValidationErrorMessage = await globalPage.locator('#app > div.mobile-viewport > div.container-deposit.mobile-viewport > div:nth-child(4) > div.container.shadow-container > div.status > div > div.status__form > div.status__form-container > small');
-    await expect(emailInputValidationErrorMessage).toBeVisible();
-    await emailInput.fill('auto_test_treepagesbp@test.com');
+    await expect(threePage.thirdPageSubmitButton).toBeEnabled();
+    await expect(threePage.iDidNotMakeTransferButton).toBeEnabled();
+    await threePage.thirdPageSubmitButton.click();
+    await expect(threePage.emailInputValidationErrorMessage).toBeVisible();
+    await threePage.emailInput.fill('auto_test_treepage_p2p@test.com');
 });
 
 
 test('The Third page - I did not make a transfer modal appears', async () => {
-    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
-    await iDidNotMakeTransferButton.click();
-    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    await expect(attachButton).toBeEnabled();
-    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
-    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
-    await attachButton.click();
+    await threePage.iDidNotMakeTransferButton.click();
+    await expect(threePage.attachButton).toBeEnabled();
+    await expect(threePage.iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await threePage.attachButton.click();
     await globalPage.waitForTimeout(2000);
-    await expect(attachButton).toBeHidden();
+    await expect(threePage.attachButton).toBeHidden();
 });
 
 test('Attach receipt', async () => {
-    await globalPage.setInputFiles('//*[@id="drop-form"]/div/div/label/span', [
-        'assets/receipts/receipt1.png'
-    ]);
+    await globalPage.setInputFiles(threePage.dropZoneSelector, [
+        filePath]);
 });
 
 
 test('Go to payment verification page', async () => {
-    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[1]');
-    await submitButton.click();
+    await threePage.thirdPageSubmitButton.click();
     // const backToReturnUrlButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[6]/button[1]');
     // await expect(backToReturnUrlButton).toBeEnabled();
-    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
-    await expect(iDidNotMakeTransferButton).toBeEnabled();
-    const timerRaw = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[1]/div/div[1]/div[2]').textContent();
-    const timer = timerRaw.split('');
+    await expect(threePage.iDidNotMakeTransferButton).toBeEnabled();
+    const timer = (await threePage.thirdPageTimerRaw).split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(3);
 });
 
 
 test('Waiting for payment verification page - I did not make a transfer modal appears', async () => {
-    const iDidNotMakeTransferButton = await globalPage.locator('//*[@id="app"]/div[1]/div[1]/div[4]/div[1]/div[2]/div/div[7]/button[2]');
-    await iDidNotMakeTransferButton.click();
-    const attachButton = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-back.primary');
-    await expect(attachButton).toBeEnabled();
-    const iDidNotMakeTransferButtonInModal = await globalPage.locator('body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.application-modal__buttons > button.p-button.p-component.application-modal__buttons-confirm.secondary-gray');
-    await expect(iDidNotMakeTransferButtonInModal).toBeEnabled();
-    await attachButton.click();
+    await threePage.iDidNotMakeTransferButton.click();
+    await expect(threePage.attachButton).toBeEnabled();
+    await expect(threePage.iDidNotMakeTransferButtonInModal).toBeEnabled();
+    await threePage.attachButton.click();
     await globalPage.waitForTimeout(2000);
-    await expect(attachButton).toBeHidden();
+    await expect(threePage.attachButton).toBeHidden();
 });
