@@ -148,4 +148,5 @@ test('Skip this step cancellation', async () => {
     await expect(threePage.skipThisStepButton).toBeEnabled;
     await threePage.skipThisStepButton.click();
     await expect(threePage.cancellationReasonModalMainText).toBeHidden;
-    await expect(threePage.orderCancelledPageMainText).toBeVisible();});
+    await expect(threePage.orderCancelledPageMainText).toBeVisible();
+});

@@ -76,6 +76,7 @@ export class ThreePage {
     private ruButtonSelector = '//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[3]/div/div[1]/div[2]/div';
     private mainEnTextSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p';
     private mainRuTextSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[1]/div/div[2]/div/p';
+    private phoneNumberSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[3]/div[2]/div[1]/div/p';
 
 
 
@@ -356,4 +357,7 @@ export class ThreePage {
         return this.page.locator(this.mainRuTextSelector);
     }
 
+    public get phoneNumber(): Locator {
+        return this.page.locator(this.phoneNumberSelector);
+    }
 }
