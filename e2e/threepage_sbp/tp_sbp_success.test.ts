@@ -112,7 +112,7 @@ test('Attaching Bank Receipt Modal Window checks', async () => {
     await threePage.attachingBankReceiptButton.click();
     await threePage.commentInputInAttachingBankReceiptModal.fill('auto_test_tree_page_sbp');
     await threePage.emailInputInAttachingBankReceiptModal.fill('auto_test_tree_page_sbp@test.com');
-    await globalPage.setInputFiles(threePage.attachFilesZoneInAttachingBankReceiptModalSelectorSelector, [
+    await globalPage.setInputFiles(threePage.attachFilesZoneInAttachingBankReceiptModalSelector, [
         filePath]);
     await threePage.submitButtonInAttachingBankReceiptModal.click();
     await globalPage.waitForTimeout(2000);

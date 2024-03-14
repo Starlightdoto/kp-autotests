@@ -68,7 +68,7 @@ export class ThreePage {
     private cancelButtonInAttachingBankReceiptModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__buttons > button.p-button.p-component.secondary-gray.modal-problem__buttons-cancel';
     private commentInputInAttachingBankReceiptModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > div.modal-problem__comment > textarea';
     private emailInputInAttachingBankReceiptModalSelector = '//*[@id="emailInput"]';
-    public attachFilesZoneInAttachingBankReceiptModalSelectorSelector = '//*[@id="dropzoneFile"]';
+    public attachFilesZoneInAttachingBankReceiptModalSelector = '//*[@id="dropzoneFile"]';
     private requestHasBeenSentModalSelector = '/html/body/div[3]/div/div/div';
     private okButtonInRequestHasBeenSentModalSelector = 'body > div.p-dialog-mask.p-component-overlay.p-component-overlay-enter > div > div > div > button';
     private helpButtonNewSelector = '//*[@id="app"]/div[1]/div[1]/div[3]/div/div[2]/div[1]/p';
