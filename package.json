@@ -13,6 +13,7 @@
     "test three_page_sbp_fail_3_send": "npx playwright test tp_sbp_fail_3page_send.test.ts --project chromium --headed",
     "test three_page_sbp_fail_4_skip": "npx playwright test tp_sbp_fail_4page_skip.test.ts --project chromium --headed",
     "test three_page_sbp_fail_4_send": "npx playwright test tp_sbp_fail_4page_send.test.ts --project chromium --headed",
+
     "test three_page_p2p": "npx playwright test three_page_p2p_success.test.ts --project chromium --headed",
     "test three_page_p2p_fail_1": "npx playwright test tp_p2p_fail_1page.test.ts --project chromium --headed",
     "test three_page_p2p_fail_2_skip": "npx playwright test tp_p2p_fail_2page_skip.test.ts --project chromium --headed",
@@ -21,7 +22,7 @@
     "test three_page_p2p_fail_3_send": "npx playwright test tp_p2p_fail_3page_send.test.ts --project chromium --headed",
     "test three_page_p2p_fail_4_skip": "npx playwright test tp_p2p_fail_4page_skip.test.ts --project chromium --headed",
     "test three_page_p2p_fail_4_send": "npx playwright test tp_p2p_fail_4page_send.test.ts --project chromium --headed",
-    "test cp_sbp": "npx playwright test chiefpay_sbp_success.test.ts --project chromium --headed",
+
     "test one_page_sbp": "npx playwright test op_sbp_success.test.ts --project chromium --headed",
     "test one_page_sbp_fail_1page_skip": "npx playwright test op_sbp_fail_1page_skip.test.ts --project chromium --headed",
     "test one_page_sbp_fail_1page_send": "npx playwright test op_sbp_fail_1page_send.test.ts --project chromium --headed",
@@ -29,6 +30,18 @@
     "test one_page_sbp_fail_2page_send": "npx playwright test op_sbp_fail_2page_send.test.ts --project chromium --headed",
     "test one_page_sbp_fail_3page_skip": "npx playwright test op_sbp_fail_3page_skip.test.ts --project chromium --headed",
     "test one_page_sbp_fail_3page_send": "npx playwright test op_sbp_fail_3page_send.test.ts --project chromium --headed",
+
+    "test one_page_p2p": "npx playwright test op_p2p_success.test.ts --project chromium --headed",
+    "test one_page_p2p_fail_1page_skip": "npx playwright test op_p2p_fail_1page_skip.test.ts --project chromium --headed",
+    "test one_page_p2p_fail_1page_send": "npx playwright test op_p2p_fail_1page_send.test.ts --project chromium --headed",
+    "test one_page_p2p_fail_2page_skip": "npx playwright test op_p2p_fail_2page_skip.test.ts --project chromium --headed",
+    "test one_page_p2p_fail_2page_send": "npx playwright test op_p2p_fail_2page_send.test.ts --project chromium --headed",
+    "test one_page_p2p_fail_3page_skip": "npx playwright test op_p2p_fail_3page_skip.test.ts --project chromium --headed",
+    "test one_page_p2p_fail_3page_send": "npx playwright test op_p2p_fail_3page_send.test.ts --project chromium --headed",
+
+    "test cp_sbp": "npx playwright test chiefpay_sbp_success.test.ts --project chromium --headed",
+
+
     "test cp_blocked": "npx playwright test chiefpay_blocked_user.test.ts --project chromium --headed",
     "test tp_blocked": "npx playwright test tp_blocked_user.test.ts --project chromium --headed",
     "test op_blocked": "npx playwright test op_blocked_user.test.ts --project chromium --headed"
