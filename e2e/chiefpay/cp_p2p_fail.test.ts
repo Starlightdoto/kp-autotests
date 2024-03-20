@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import { createSBPRequestLink } from '../helpers/create_request_link';
+import { createP2PRequestLink } from '../helpers/create_request_link';
 import {ChiefpayPage} from "../pages/chiefpay";
 import { filePath } from "../helpers/data";
 
@@ -13,7 +13,7 @@ let chiefpay: ChiefpayPage;
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
-    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
+    const baseUrl = await createP2PRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }
@@ -35,7 +35,7 @@ test('First Page Main checks', async () => {
     const timer = (await chiefpay.timerRaw).split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(10);
 
-    await expect(chiefpay.phoneNumber).toBeVisible();
+    await expect(chiefpay.cardNumber).toBeVisible();
     await expect(chiefpay.transferredButton).toBeEnabled();
     await expect(chiefpay.cancelButton).toBeEnabled();
 });

@@ -1,11 +1,14 @@
 import {test, expect} from '@playwright/test';
 import { createSBPRequestLink } from '../helpers/create_request_link';
+import {ChiefpayPage} from "../pages/chiefpay";
+import { filePath } from "../helpers/data";
 
 let globalPage;
 const sum = '500.00';
 const currencyCode = '643';
 const returnUrl = 'https://google.com';
 
+let chiefpay: ChiefpayPage;
 
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
@@ -14,6 +17,9 @@ test.beforeAll(async ({browser}, testInfo) => {
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }
+
+    chiefpay = new ChiefpayPage(globalPage);
+
 });
 
 test.afterAll(async () => {
@@ -21,83 +27,76 @@ test.afterAll(async () => {
 });
 
 test('Blocked user page elements are shown', async () => {
-    const transferCancelledText = await globalPage.locator('//*[@id="app"]/div[1]/main/div[1]/h1');
-    await expect(transferCancelledText).toBeVisible();
-    const goToPersonalAccountButton = await globalPage.locator('//*[@id="app"]/div[1]/main/div[1]/button');
-    await expect(goToPersonalAccountButton).toBeEnabled();
-    const languageButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[1]/p');
-    await expect(languageButton).toBeEnabled();
-    const instructionButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[2]/p');
-    await expect(instructionButton).toBeEnabled();
-    const transferRulesButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[3]/p');
-    await expect(instructionButton).toBeEnabled();
-    const chatButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[4]/p');
-    await expect(instructionButton).toBeEnabled();
+    await expect(chiefpay.transferCancelledText).toBeVisible();
+    await expect(chiefpay.goToPersonalAccountButton).toBeEnabled();
+    await expect(chiefpay.changeLocaleButton).toBeEnabled();
+    await expect(chiefpay.howToTransferButton).toBeEnabled();
+    await expect(chiefpay.transferRulesButton).toBeEnabled();
+    await expect(chiefpay.chatButton).toBeEnabled();
 });
 
 test('Locale change', async () => {
-    const headerTextEn = await globalPage.locator('//*[@id="app"]/div[1]/main/div[1]/h1').textContent();
-    await expect(headerTextEn).toEqual('Transfer cancelled');
-    const changeLanguageButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[1]/p');
-    await changeLanguageButton.click();
-    const ruLanguageButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[5]/p[1]');
-    await ruLanguageButton.click();
-    const headerTextRu = await globalPage.locator('//*[@id="app"]/div[1]/main/div[1]/h1').textContent();
-    await expect(headerTextRu).toEqual('Перевод отменён');
-    await changeLanguageButton.click();
-    const enLanguageButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[5]/p[2]');
-    await enLanguageButton.click();
+    await chiefpay.changeLocaleButton.click();
+    await chiefpay.ruButton.click();
+    await globalPage.waitForTimeout(2000);
+    const ruTextContent = await chiefpay.transferCancelledRuText.textContent();
+    await expect(ruTextContent).toEqual('Перевод отменён');
+
+    await chiefpay.changeLocaleButton.click();
+    await chiefpay.enButton.click();
+    await globalPage.waitForTimeout(2000);
+    const enTextContent = await chiefpay.transferCancelledEnText.textContent();
+    await expect(enTextContent).toEqual('Transfer cancelled');
+
 });
 
-test('Instruction modal open and close', async () => {
-    const instructionButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[2]/p');
-    await instructionButton.click();
-    const instructionModal = await globalPage.locator('//*[@id="app"]/div[1]/main/div[5]/div/div');
-    await expect(instructionModal).toBeVisible();
-    const okButton = await globalPage.locator('//*[@id="app"]/div[1]/main/div[5]/div/div/div[2]/button');
-    await okButton.click();
-    await expect(instructionModal).toBeHidden();
+test('How to Transfer modal window checks', async () => {
+    await chiefpay.howToTransferButton.click();
+    await expect (chiefpay.transferInstructionModal).toBeVisible();
+    await expect(chiefpay.gotItButtonInTransferInstruction).toBeEnabled();
+    await expect(chiefpay.xButtonInTransferInstruction).toBeEnabled();
+    await chiefpay.xButtonInTransferInstruction. click();
+    await expect (chiefpay.transferInstructionModal).toBeHidden();
+    await chiefpay.howToTransferButton.click();
+    await expect (chiefpay.transferInstructionModal).toBeVisible();
+    await chiefpay.gotItButtonInTransferInstruction.click();
+    await expect (chiefpay.transferInstructionModal).toBeHidden();
 });
 
-test('Transfer rules modal open and close', async () => {
-    const transferRulesButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[3]/p');
-    await transferRulesButton.click();
-    const transferRulesModal = await globalPage.locator('//*[@id="app"]/div[1]/main/div[8]/div/div');
-    await expect(transferRulesModal).toBeVisible();
-    const okButton = await globalPage.locator('//*[@id="app"]/div[1]/main/div[8]/div/div/div[2]/button');
-    await okButton.click();
-    await expect(transferRulesModal).toBeHidden();
-});
+test('Transfer rules modal window checks', async () => {
+    await chiefpay.transferRulesButton.click();
+    await expect (chiefpay.transferRulesModal).toBeVisible();
+    await expect(chiefpay.gotItButtonInTransferRules).toBeEnabled();
+    await expect(chiefpay.xButtonInTransferRules).toBeEnabled();
+    await chiefpay.xButtonInTransferRules. click();
+    await expect (chiefpay.transferRulesModal).toBeHidden();
+    await chiefpay.transferRulesButton.click();
+    await expect (chiefpay.transferRulesModal).toBeVisible();
+    await chiefpay.gotItButtonInTransferRules.click();
+    await expect (chiefpay.transferRulesModal).toBeHidden();
 
-
-test('Chat modal open and close', async () => {
-    const chatButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[4]/p');
-    await chatButton.click();
-    const chatModal = await globalPage.locator('//*[@id="app"]/div[1]/main/div[3]/div/div');
-    await expect(chatModal).toBeVisible();
-    const cancelButton = await globalPage.locator('//*[@id="app"]/div[1]/main/div[3]/div/div/div[2]/div[5]/button[2]');
-    await cancelButton.click();
-    await expect(chatModal).toBeHidden();
 });
 
 
-test('Chat submit problem', async () => {
-    const chatButton = await globalPage.locator('//*[@id="app"]/div[1]/header/div/div/div/div[4]/p');
-    await chatButton.click();
-    const commentField = await globalPage.locator('//*[@id="app"]/div[1]/main/div[3]/div/div/div[2]/div[2]/textarea');
-    await commentField.fill('Test test');
-    const emailField = await globalPage.locator('//*[@id="app"]/div[1]/main/div[3]/div/div/div[2]/div[3]/div/input');
-    await emailField.fill('auto_test_chiefpay@test.com');
-    await globalPage.setInputFiles('//*[@id="app"]/div[1]/main/div[3]/div/div/div[2]/div[4]/div/input', [
-        'assets/receipts/receipt1.png'
-    ]);
-    await globalPage.waitForTimeout(4000);
-    const submitButton = await globalPage.locator('//*[@id="app"]/div[1]/main/div[3]/div/div/div[2]/div[5]/button[1]');
-    await submitButton.click();
-    const finalModal = await globalPage.locator('//*[@id="app"]/div[1]/main/div[4]/div/div');
-    await expect(finalModal).toBeVisible();
-    await globalPage.waitForLocator('//*[@id="app"]/div[1]/main/div[4]/div/div/div[2]/div[1]/p');
-    const okButton = await globalPage.locator('//*[@id="app"]/div[1]/main/div[4]/div/div/div[2]/button');
-    await okButton.click();
-    await expect(finalModal).toBeHidden();
+test('Chat Modal Window checks', async () => {
+
+    await chiefpay.chatButton.click();
+    await globalPage.waitForTimeout(2000);
+    await expect (chiefpay.chatModal).toBeVisible;
+    await expect (chiefpay.submitButtonInChatModal).toBeEnabled;
+    await expect (chiefpay.cancelButtonInChatModal).toBeEnabled;
+    await chiefpay.cancelButtonInChatModal.click();
+    await expect (chiefpay.chatModal).toBeHidden;
+    await chiefpay.chatButton.click();
+    await chiefpay.commentInputInChatModal.fill('auto_test_chiefpay_blocked_user');
+    await chiefpay.emailInputInChatModal.fill('auto_test_chiefpay_blocked_user@test.com');
+    await globalPage.setInputFiles(chiefpay.attachFilesZoneInChatModalSelector, [
+        filePath]);
+    await chiefpay.submitButtonInChatModal.click();
+    await globalPage.waitForTimeout(2000);
+    await expect (chiefpay.requestHasBeenSentModal).toBeVisible;
+    await expect (chiefpay.okButtonInRequestHasBeenSentModal).toBeEnabled;
+    await chiefpay.okButtonInRequestHasBeenSentModal.click();
+    await expect (chiefpay.requestHasBeenSentModal).toBeHidden;
+
 });

@@ -1,5 +1,5 @@
 import {test, expect} from '@playwright/test';
-import { createSBPRequestLink } from '../helpers/create_request_link';
+import { createP2PRequestLink } from '../helpers/create_request_link';
 import {ChiefpayPage} from "../pages/chiefpay";
 import { filePath } from "../helpers/data";
 
@@ -13,7 +13,7 @@ let chiefpay: ChiefpayPage;
 test.beforeAll(async ({browser}, testInfo) => {
     const context = await browser.newContext();
     globalPage = await context.newPage();
-    const baseUrl = await createSBPRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
+    const baseUrl = await createP2PRequestLink({page: globalPage}, '18', 'send', sum, currencyCode);
     if( baseUrl !== undefined) {
         await globalPage.goto(baseUrl);
     }
@@ -35,7 +35,7 @@ test('First Page Main checks', async () => {
     const timer = (await chiefpay.timerRaw).split('');
     await expect(Number(timer[0])).toBeLessThanOrEqual(10);
 
-    await expect(chiefpay.phoneNumber).toBeVisible();
+    await expect(chiefpay.cardNumber).toBeVisible();
     await expect(chiefpay.transferredButton).toBeEnabled();
     await expect(chiefpay.cancelButton).toBeEnabled();
 });
@@ -81,8 +81,8 @@ test('Chat Modal Window checks', async () => {
     await chiefpay.cancelButtonInChatModal.click();
     await expect (chiefpay.chatModal).toBeHidden;
     await chiefpay.chatButton.click();
-    await chiefpay.commentInputInChatModal.fill('auto_test_chiefpay_sbp');
-    await chiefpay.emailInputInChatModal.fill('auto_test_chiefpay_sbp@test.com');
+    await chiefpay.commentInputInChatModal.fill('auto_test_chiefpay_p2p');
+    await chiefpay.emailInputInChatModal.fill('auto_test_chiefpay_p2p@test.com');
     await globalPage.setInputFiles(chiefpay.attachFilesZoneInChatModalSelector, [
         filePath]);
     await chiefpay.submitButtonInChatModal.click();
@@ -121,6 +121,7 @@ test('I agree with transfer rules checkbox checks', async () => {
     await chiefpay.xButtonInTransferRules.click();
     await expect (chiefpay.transferRulesModal).toBeHidden();
 
+
 });
 
 test('Locale change - main page', async () => {
@@ -128,13 +129,13 @@ test('Locale change - main page', async () => {
     await chiefpay.ruButton.click();
     await globalPage.waitForTimeout(2000);
     const ruTextContent = await chiefpay.mainRuText.textContent();
-    await expect(ruTextContent).toEqual('Перевод по СБП');
+    await expect(ruTextContent).toEqual('Перевод на карту:');
 
     await chiefpay.changeLocaleButton.click();
     await chiefpay.enButton.click();
     await globalPage.waitForTimeout(2000);
     const enTextContent = await chiefpay.mainEnText.textContent();
-    await expect(enTextContent).toEqual('SBP transfer');
+    await expect(enTextContent).toEqual('Transfer to by card');
 });
 
 
@@ -149,7 +150,7 @@ test('Go to transferred  page', async () => {
 
 
 test('Filling in email field on transferred  page', async () => {
-    await chiefpay.emailInputOnTransferredPage.fill('auto_test_chiefpay_sbp@test.com');
+    await chiefpay.emailInputOnTransferredPage.fill('auto_test_chiefpay_p2p@test.com');
     await chiefpay.saveButton.click();
     await expect(chiefpay.pencilSign).toBeVisible();
 
