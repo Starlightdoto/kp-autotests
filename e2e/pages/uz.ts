@@ -9,14 +9,16 @@ export class UzPage {
 
     private amountSelector = '//*[@id="app"]/div[1]/div[1]/div[4]/div/div[2]/div/div[1]/div[2]/div/p';
     private timerRawSelector = '';
-    private phoneNumberSelector = '';
-    private completeButtonSelector = '';
-    private backButtonSelector = '';
+    private cardNumberSelector = '';
+    private transferCompletedButtonSelector = '';
+    private cancelButtonSelector = '';
+
     private iAgreeCheckboxSelector = '';
     private transferRulesLinkSelector = '';
     private transferRulesModalSelector = '';
     private okButtonInTransferRulesModalSelector = '';
     private xButtonInTransferRulesModalSelector = '';
+
     private transferRulesButtonSelector = '';
     private attachingBankReceiptButtonSelector = '';
     private attachingBankReceiptModalSelector = '';
@@ -27,15 +29,15 @@ export class UzPage {
     public attachFilesZoneInAttachingBankReceiptModalSelector = '';
     private requestHasBeenSentModalSelector = '';
     private okButtonInRequestHasBeenSentModalSelector = '';
-    private helpButtonSelector = '';
-    private transferInstructionSelector = '';
-    private statusInstructionSelector = '';
-    private xButtonInHelpModalSelector = '';
-    private transferModalSelector = '';
-    private statusModalSelector = '';
-    private backModalSelector = '';
-    private cancelButtonInBackModalSelector = '';
-    private backButtonInBackModalSelector = '';
+
+    private instructionButtonSelector = '';
+    private transferInstructionHeaderSelector = '';
+    private xButtonInInstructionModalSelector = '';
+
+    private cancelModalSelector = '';
+    private cancelButtonInCancelModalSelector = '';
+    private backButtonInCancelModalSelector = '';
+
     private changeLocaleButtonSelector = '';
     private enButtonSelector = '';
     private uzButtonSelector = '';
@@ -43,27 +45,24 @@ export class UzPage {
     private mainEnTextSelector = '';
     private mainUzTextSelector = '';
     private mainRuTextSelector = '';
-    private headerTextSelector = '';
-    private secondPageTimerRawSelector = '';
+
+    private transferCompletedPageHeaderTextSelector = '';
     private emailInputSelector = '';
     private transferDetailsBlockSelector = '';
-    private secondPageSubmitButtonSelector = '';
-    private iDidNotMakeTransferButtonSelector = '';
-    private emailInputValidationErrorMessageSelector = '';
+    private secondPageContinueButtonSelector = '';
+    private iDidNotTransferButtonSelector = '';
     private attachButtonSelector = '';
     private iDidNotMakeTransferButtonInModalSelector = '';
     public dropZoneSelector = '';
-    private iDidNotMakeTransferButtonInVerificationPageSelector = '';
 
+    private deleteButtonInVerificationPageSelector = '';
+    private pencilSignInVerificationPageSelector = '';
+    private confirmButtonInVerificationPageSelector = '';
 
-    private cancellationReasonModalHeaderTextSelector = '';
-    private firstCheckboxInCancellationReasonModalSelector = '';
-    private secondCheckboxInCancellationReasonModalSelector = '';
-    private commentInputInCancellationReasonModalSelector = '';
-    private submitButtonInCancellationReasonModalSelector = '';
-    private skipThisStepButtonInCancellationReasonModalSelector = '';
-    public dropZoneInCancellationReasonModalSelector = '';
-    private theRequestIsOutdatedTextSelector = '';
+    private cancelButtonInDeleteModalSelector = '';
+    private deleteButtonInDeleteModalSelector = '';
+
+    private orderCancelledTextSelector = '';
 
     private accountIsBlockedHeaderSelector = '';
     private unlockMyAccountButtonSelector = '';
@@ -72,8 +71,11 @@ export class UzPage {
     private commentFieldInBlockedUserSelector = '';
     private supportChatSelector = '';
     private chatHeaderSelector = '';
+    private thanksForTheRequestTextSelector = '';
 
-    private cardNumberSelector = '';
+
+
+
 
 
 
@@ -91,16 +93,17 @@ export class UzPage {
         return this.page.locator(this.timerRawSelector). textContent();
     }
 
-    public get phoneNumber(): Locator {
-        return this.page.locator(this.phoneNumberSelector);
+
+    public get cardNumber(): Locator {
+        return this.page.locator(this.cardNumberSelector);
     }
 
-    public get completeButton(): Locator {
-        return this.page.locator(this.completeButtonSelector);
+    public get transferCompletedButton(): Locator {
+        return this.page.locator(this.transferCompletedButtonSelector);
     }
 
-    public get backButton(): Locator {
-        return this.page.locator(this.backButtonSelector);
+    public get cancelButton(): Locator {
+        return this.page.locator(this.cancelButtonSelector);
     }
 
     public get iAgreeCheckbox(): Locator {
@@ -160,40 +163,30 @@ export class UzPage {
     }
 
 
-    public get helpButton(): Locator {
-        return this.page.locator(this.helpButtonSelector);
+    public get instructionButton(): Locator {
+        return this.page.locator(this.instructionButtonSelector);
     }
 
-    public get transferInstruction(): Locator {
-        return this.page.locator(this.transferInstructionSelector);
+    public get transferInstructionHeader(): Locator {
+        return this.page.locator(this.transferInstructionHeaderSelector);
     }
 
-    public get statusInstruction(): Locator {
-        return this.page.locator(this.statusInstructionSelector);
+
+    public get xButtonInInstructionModal(): Locator {
+        return this.page.locator(this.xButtonInInstructionModalSelector);
     }
 
-    public get xButtonInHelpModal(): Locator {
-        return this.page.locator(this.xButtonInHelpModalSelector);
+
+    public get cancelModal(): Locator {
+        return this.page.locator(this.cancelModalSelector);
     }
 
-    public get transferModal(): Locator {
-        return this.page.locator(this.transferModalSelector);
+    public get cancelButtonInCancelModal(): Locator {
+        return this.page.locator(this.cancelButtonInCancelModalSelector);
     }
 
-    public get statusModal(): Locator {
-        return this.page.locator(this.statusModalSelector);
-    }
-
-    public get backModal(): Locator {
-        return this.page.locator(this.backModalSelector);
-    }
-
-    public get cancelButtonInBackModal(): Locator {
-        return this.page.locator(this.cancelButtonInBackModalSelector);
-    }
-
-    public get backButtonInBackModal(): Locator {
-        return this.page.locator(this.backButtonInBackModalSelector);
+    public get backButtonInCancelModal(): Locator {
+        return this.page.locator(this.backButtonInCancelModalSelector);
     }
 
     public get changeLocaleButton(): Locator {
@@ -224,13 +217,10 @@ export class UzPage {
         return this.page.locator(this.mainRuTextSelector);
     }
 
-    public get headerText(): Locator {
-        return this.page.locator(this.headerTextSelector);
+    public get transferCompletedPageHeaderText(): Locator {
+        return this.page.locator(this.transferCompletedPageHeaderTextSelector);
     }
 
-    public get secondPageTimerRaw(): Promise<string | null> {
-        return this.page.locator(this.secondPageTimerRawSelector). textContent();
-    }
 
     public get emailInput(): Locator {
         return this.page.locator(this.emailInputSelector);
@@ -240,17 +230,15 @@ export class UzPage {
         return this.page.locator(this.transferDetailsBlockSelector);
     }
 
-    public get secondPageSubmitButton(): Locator {
-        return this.page.locator(this.secondPageSubmitButtonSelector);
+    public get secondPageContinueButton(): Locator {
+        return this.page.locator(this.secondPageContinueButtonSelector);
     }
 
-    public get iDidNotMakeTransferButton(): Locator {
-        return this.page.locator(this.iDidNotMakeTransferButtonSelector);
+    public get iDidNotTransferButton(): Locator {
+        return this.page.locator(this.iDidNotTransferButtonSelector);
     }
 
-    public get emailInputValidationErrorMessage(): Locator {
-        return this.page.locator(this.emailInputValidationErrorMessageSelector);
-    }
+
 
     public get attachButton(): Locator {
         return this.page.locator(this.attachButtonSelector);
@@ -261,39 +249,31 @@ export class UzPage {
     }
 
 
-    public get iDidNotMakeTransferButtonInVerificationPage(): Locator {
-        return this.page.locator(this.iDidNotMakeTransferButtonInVerificationPageSelector);
+    public get deleteButtonInVerificationPage(): Locator {
+        return this.page.locator(this.deleteButtonInVerificationPageSelector);
+    }
+
+    public get pencilSignInVerificationPage(): Locator {
+        return this.page.locator(this.pencilSignInVerificationPageSelector);
+    }
+
+    public get confirmButtonInVerificationPage(): Locator {
+        return this.page.locator(this.confirmButtonInVerificationPageSelector);
+    }
+
+    public get cancelButtonInDeleteModal(): Locator {
+        return this.page.locator(this.cancelButtonInDeleteModalSelector);
+    }
+
+
+    public get deleteButtonInDeleteModal(): Locator {
+        return this.page.locator(this.deleteButtonInDeleteModalSelector);
     }
 
 
 
-    public get cancellationReasonModalHeader(): Locator {
-        return this.page.locator(this.cancellationReasonModalHeaderTextSelector);
-    }
-
-    public get firstCheckboxInCancellationReasonModal(): Locator {
-        return this.page.locator(this.firstCheckboxInCancellationReasonModalSelector);
-    }
-
-    public get secondCheckboxInCancellationReasonModal(): Locator {
-        return this.page.locator(this.secondCheckboxInCancellationReasonModalSelector);
-    }
-
-
-    public get commentInputInCancellationReasonModal(): Locator {
-        return this.page.locator(this.commentInputInCancellationReasonModalSelector);
-    }
-
-    public get submitButtonInCancellationReasonModal(): Locator {
-        return this.page.locator(this.submitButtonInCancellationReasonModalSelector);
-    }
-
-    public get skipThisStepButtonInCancellationReasonModal(): Locator {
-        return this.page.locator(this.skipThisStepButtonInCancellationReasonModalSelector);
-    }
-
-    public get theRequestIsOutdatedText(): Locator {
-        return this.page.locator(this.theRequestIsOutdatedTextSelector);
+    public get orderCancelledText(): Locator {
+        return this.page.locator(this.orderCancelledTextSelector);
     }
 
     public get accountIsBlockedHeader(): Locator {
@@ -324,8 +304,8 @@ export class UzPage {
         return this.page.locator(this.chatHeaderSelector);
     }
 
-    public get cardNumber(): Locator {
-        return this.page.locator(this.cardNumberSelector);
+    public get thanksForTheRequestText(): Locator {
+        return this.page.locator(this.thanksForTheRequestTextSelector);
     }
 
 }
